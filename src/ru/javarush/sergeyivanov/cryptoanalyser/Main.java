@@ -104,7 +104,7 @@ public class Main {
     }
 
     public static void decryption(String pathFromFile, String pathToFile, int key) {
-        key = key*-1;
+        key *= -1;
         encryption(pathFromFile, pathToFile,  key);
     }
 
