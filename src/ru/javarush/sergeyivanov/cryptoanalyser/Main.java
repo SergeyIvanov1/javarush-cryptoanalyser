@@ -11,14 +11,14 @@ public class Main {
     private static int unencryptedCharInd; // unencryptedChar, который находится на позиции с индексом "i"
     private static int secretCharInd; // secretChar, который находится на позиции с индексом "i"
     private static char secretChar; // зашифрованный символ
-    private static int key; // секретный ключ
+    private static int key = -1; // секретный ключ
     private static final char[] ALPHABET = {'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з',
             'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ',
             'ъ', 'ы', 'ь', 'э', 'ю', 'я'};
     private static final char[] SYMBOLS = {'.', ',', '"', '\'', ':', '-', '!', '?', ' '};
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)  {
 //        Scanner scanner = new Scanner(System.in);
 //
 //        System.out.println("Input the key");
@@ -31,19 +31,20 @@ public class Main {
 //
 //        System.out.println("Input the path to the file containing the text");
 //        String pathToFile = scanner.nextLine();
-        String pathFromFile = "file";
-        String pathToFile = "file2";
+        String fileInit = "file";
+        String file_encrypt = "file_encrypt";
+        String file_decrypt = "file_decrypt";
 
-        checkPaths(pathFromFile, pathToFile);
-        encryption(pathFromFile, pathToFile, 5);
-
+        checkPaths(fileInit, file_encrypt, file_decrypt);
+//        encryption(fileInit, file_encrypt, key);
+        decryption(file_encrypt, file_decrypt, key);
     }
 
-    public static void encryption(String pathFromFile, String pathToFile, int key) throws IOException {
+    public static void encryption(String pathFrom, String pathTo, int key) {
 
-        try (FileInputStream fileInputStream = new FileInputStream(pathFromFile);
+        try (FileInputStream fileInputStream = new FileInputStream(pathFrom);
              BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-             FileOutputStream fileOutputStream = new FileOutputStream(pathToFile);
+             FileOutputStream fileOutputStream = new FileOutputStream(pathTo);
              BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream))) {
 
             while ((unencryptedChar = bufferedReader.read()) != -1) { //запускаю цикл чтения по 1 символу из файла
@@ -62,6 +63,9 @@ public class Main {
                             if (tempToLowerChar == ALPHABET[i]) {
 
                                 secretCharInd = (i + key) % 33;
+                                if (secretCharInd < 0) {
+                                    secretCharInd = 33 - Math.abs(secretCharInd);
+                                }
                                 secretChar = ALPHABET[secretCharInd];
 
                                 bufferedWriter.append(Character.toUpperCase(secretChar));
@@ -71,6 +75,9 @@ public class Main {
                         if (unencryptedChar == ALPHABET[i]) {
 
                             secretCharInd = (i + key) % 33;
+                            if (secretCharInd < 0) {
+                                secretCharInd = 33 - Math.abs(secretCharInd);
+                            }
                             secretChar = ALPHABET[secretCharInd];
 
                             bufferedWriter.append(secretChar);
@@ -89,13 +96,16 @@ public class Main {
                 }
             }
             bufferedWriter.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
     }
 
-    public static void decryption(Path path) {
-
-
+    public static void decryption(String pathFromFile, String pathToFile, int key) {
+        key = key*-1;
+        encryption(pathFromFile, pathToFile,  key);
     }
 
     public static void bruteForceCriptanalyze(Path path) {
@@ -108,9 +118,9 @@ public class Main {
 
     }
 
-    public static void checkPaths(String pathFromFile, String pathToFile) {
+    public static void checkPaths(String fileInit, String file_encrypt, String file_decrypt) {
 
-        if (pathToFile == null) {
+        if (file_encrypt == null) {
             throw new NullPointerException("path equals null");
         }
     }
