@@ -2,7 +2,7 @@ package ru.javarush.sergeyivanov.cryptoanalyser;
 
 import java.io.*;
 import java.nio.file.Path;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
@@ -11,7 +11,7 @@ public class Main {
     private static int unencryptedCharInd; // unencryptedChar, который находится на позиции с индексом "i"
     private static int secretCharInd; // secretChar, который находится на позиции с индексом "i"
     private static char secretChar; // зашифрованный символ
-    private static int key = -1; // секретный ключ
+    private static int key = 1; // секретный ключ
     private static final char[] ALPHABET = {'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з',
             'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ',
             'ъ', 'ы', 'ь', 'э', 'ю', 'я'};
@@ -31,13 +31,16 @@ public class Main {
 //
 //        System.out.println("Input the path to the file containing the text");
 //        String pathToFile = scanner.nextLine();
-        String fileInit = "file";
-        String file_encrypt = "file_encrypt";
-        String file_decrypt = "file_decrypt";
+        String pathFrom = "file";
+        String pathTo = "file_encrypt";
+        String fileDecrypt = "file_decrypt";
+        String fileForInstance = "fileForInstance";
 
-        checkPaths(fileInit, file_encrypt, file_decrypt);
-//        encryption(fileInit, file_encrypt, key);
-        decryption(file_encrypt, file_decrypt, key);
+        checkPaths(pathFrom, pathTo, fileDecrypt);
+
+//        encryption(fileInit, fileForEncrypt, key);
+//        decryptionWithKey(pathTo, fileDecrypt, key);
+        decryptionBruteForce(pathTo, fileDecrypt, fileForInstance);
     }
 
     public static void encryption(String pathFrom, String pathTo, int key) {
@@ -62,9 +65,9 @@ public class Main {
 
                             if (tempToLowerChar == ALPHABET[i]) {
 
-                                secretCharInd = (i + key) % 33;
+                                secretCharInd = (i + key) % ALPHABET.length;
                                 if (secretCharInd < 0) {
-                                    secretCharInd = 33 - Math.abs(secretCharInd);
+                                    secretCharInd = ALPHABET.length - Math.abs(secretCharInd);
                                 }
                                 secretChar = ALPHABET[secretCharInd];
 
@@ -74,9 +77,9 @@ public class Main {
 
                         if (unencryptedChar == ALPHABET[i]) {
 
-                            secretCharInd = (i + key) % 33;
+                            secretCharInd = (i + key) % ALPHABET.length;
                             if (secretCharInd < 0) {
-                                secretCharInd = 33 - Math.abs(secretCharInd);
+                                secretCharInd = ALPHABET.length - Math.abs(secretCharInd);
                             }
                             secretChar = ALPHABET[secretCharInd];
 
@@ -103,17 +106,32 @@ public class Main {
         }
     }
 
-    public static void decryption(String pathFromFile, String pathToFile, int key) {
+    public static void decryptionWithKey(String pathFrom, String pathTo, int key) {
         key *= -1;
-        encryption(pathFromFile, pathToFile,  key);
+        encryption(pathFrom, pathTo,  key);
+     }
+
+    public static void decryptionBruteForce(String pathFrom, String pathTo, String fileForInstance) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        int key = 2;
+        while (!scanner.nextLine().equals("exit")) {
+            if (key == 0) {
+                key++;
+                continue;
+            }
+
+            if (key == 33) {
+                break;
+            }
+            encryption(pathFrom, pathTo,  key);
+            key++;
+        }
+
     }
 
-    public static void bruteForceCriptanalyze(Path path) {
-
-
-    }
-
-    public static void staticCriptanalyze(Path path) {
+    public static void decryptionWithStatistic(Path path) {
 
 
     }
