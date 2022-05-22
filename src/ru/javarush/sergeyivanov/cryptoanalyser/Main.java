@@ -2,8 +2,7 @@ package ru.javarush.sergeyivanov.cryptoanalyser;
 
 import java.io.*;
 import java.nio.file.Path;
-import java.util.Date;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -40,7 +39,8 @@ public class Main {
 
 //        encryption(fileInit, fileForEncrypt, key);
 //        decryptionWithKey(pathTo, fileDecrypt, key);
-        decryptionBruteForce(pathTo, fileDecrypt, fileForInstance);
+//        decryptionBruteForce(pathTo, fileDecrypt, fileForInstance);
+        decryptionWithStatistic(pathTo, fileForInstance);
     }
 
     public static void encryption(String pathFrom, String pathTo, int key) {
@@ -93,7 +93,7 @@ public class Main {
                         if (unencryptedChar == SYMBOLS[j]) {
 
                             secretChar = SYMBOLS[j];
-                            bufferedWriter.append((char) secretChar);
+                            bufferedWriter.append(secretChar);
                         }
                     }
                 }
@@ -131,8 +131,35 @@ public class Main {
 
     }
 
-    public static void decryptionWithStatistic(Path path) {
+    public static void decryptionWithStatistic(String pathTo, String fileForInstance) {
 
+        try (FileInputStream fileInputStream = new FileInputStream(pathTo);
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+                FileOutputStream fileOutputStream = new FileOutputStream(fileForInstance);
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream))) {
+
+            HashMap<Character, Integer> mapaOfLetters = new HashMap<>();
+
+            int value;
+            while ((value =  bufferedReader.read()) != -1) {
+
+                secretChar = (char) value;
+                if (Character.isLetter(secretChar)) {
+
+                    if (mapaOfLetters.containsKey(secretChar)) {
+                        mapaOfLetters.put(secretChar, mapaOfLetters.get(secretChar) + 1);
+                    } else {
+                        mapaOfLetters.put(secretChar, 1);
+                    }
+                }
+            }
+            System.out.println(mapaOfLetters);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
