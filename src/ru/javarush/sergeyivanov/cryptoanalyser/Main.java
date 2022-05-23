@@ -10,14 +10,14 @@ public class Main {
     private static int unencryptedCharInd; // unencryptedChar, который находится на позиции с индексом "i"
     private static int secretCharInd; // secretChar, который находится на позиции с индексом "i"
     private static char secretChar; // зашифрованный символ
-    private static int key = 1; // секретный ключ
+    private static int key = -17; // секретный ключ
     private static final char[] ALPHABET = {'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з',
             'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ',
             'ъ', 'ы', 'ь', 'э', 'ю', 'я'};
     private static final char[] SYMBOLS = {'.', ',', '"', '\'', ':', '-', '!', '?', ' '};
 
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
 //        Scanner scanner = new Scanner(System.in);
 //
 //        System.out.println("Input the key");
@@ -37,7 +37,7 @@ public class Main {
 
         checkPaths(pathFrom, pathTo, fileDecrypt);
 
-//        encryption(fileInit, fileForEncrypt, key);
+//        encryption(pathFrom, pathTo, key);
 //        decryptionWithKey(pathTo, fileDecrypt, key);
 //        decryptionBruteForce(pathTo, fileDecrypt, fileForInstance);
         decryptionWithStatistic(pathTo, fileForInstance);
@@ -108,8 +108,8 @@ public class Main {
 
     public static void decryptionWithKey(String pathFrom, String pathTo, int key) {
         key *= -1;
-        encryption(pathFrom, pathTo,  key);
-     }
+        encryption(pathFrom, pathTo, key);
+    }
 
     public static void decryptionBruteForce(String pathFrom, String pathTo, String fileForInstance) {
 
@@ -125,7 +125,7 @@ public class Main {
             if (key == 33) {
                 break;
             }
-            encryption(pathFrom, pathTo,  key);
+            encryption(pathFrom, pathTo, key);
             key++;
         }
 
@@ -134,26 +134,62 @@ public class Main {
     public static void decryptionWithStatistic(String pathTo, String fileForInstance) {
 
         try (FileInputStream fileInputStream = new FileInputStream(pathTo);
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-                FileOutputStream fileOutputStream = new FileOutputStream(fileForInstance);
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream))) {
+             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+             FileOutputStream fileOutputStream = new FileOutputStream(fileForInstance);
+             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream))) {
 
-            HashMap<Character, Integer> mapaOfLetters = new HashMap<>();
+            HashMap<Character, Integer> mapa = new HashMap<>();
 
             int value;
-            while ((value =  bufferedReader.read()) != -1) {
+            while ((value = bufferedReader.read()) != -1) {
 
-                secretChar = (char) value;
-                if (Character.isLetter(secretChar)) {
+                secretChar = Character.toLowerCase((char) value);
 
-                    if (mapaOfLetters.containsKey(secretChar)) {
-                        mapaOfLetters.put(secretChar, mapaOfLetters.get(secretChar) + 1);
+                if (Character.isLetter(secretChar) && isInsideOfALPHABET(secretChar)) {
+
+                    if (mapa.containsKey(secretChar)) {
+                        mapa.put(secretChar, mapa.get(secretChar) + 1);
                     } else {
-                        mapaOfLetters.put(secretChar, 1);
+                        mapa.put(secretChar, 1);
                     }
                 }
             }
-            System.out.println(mapaOfLetters);
+
+            char mostFrequent = 0;
+            char moreFrequent = 0;
+            int biggest = 0;
+            int bigger = 0;
+
+            Set<Map.Entry<Character, Integer>> entries = mapa.entrySet();
+            for (Map.Entry<Character, Integer> pair : entries) {
+
+                char character = pair.getKey();
+                int amount = pair.getValue();
+
+                if (amount > biggest) {
+
+                    moreFrequent = mostFrequent;
+                    bigger = biggest;
+                    mostFrequent = character;
+                    biggest = amount;
+
+                } else if (amount == biggest) {
+
+                    moreFrequent = character;
+                    bigger = amount;
+
+                } else if (amount > bigger) {
+
+                    moreFrequent = character;
+                    bigger = amount;
+
+                }
+            }
+
+            System.out.println(mostFrequent + " " + biggest);
+            System.out.println(moreFrequent + " " + bigger);
+
+            System.out.println(mapa);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -168,5 +204,15 @@ public class Main {
         if (file_encrypt == null) {
             throw new NullPointerException("path equals null");
         }
+    }
+
+    public static boolean isInsideOfALPHABET (char letter) {
+
+        for (int i = 0; i < ALPHABET.length; i++) {
+            if (letter == ALPHABET[i]) {
+                return true;
+            }
+        }
+        return false;
     }
 }
