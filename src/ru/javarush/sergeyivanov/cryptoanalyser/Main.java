@@ -10,7 +10,7 @@ public class Main {
     private static int unencryptedCharInd; // unencryptedChar, который находится на позиции с индексом "i"
     private static int secretCharInd; // secretChar, который находится на позиции с индексом "i"
     private static char secretChar; // зашифрованный символ
-    private static int key = -17; // секретный ключ
+    private static int key = 5; // секретный ключ
     private static final char[] ALPHABET = {'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з',
             'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ',
             'ъ', 'ы', 'ь', 'э', 'ю', 'я'};
@@ -37,7 +37,7 @@ public class Main {
 
         checkPaths(pathFrom, pathTo, fileDecrypt);
 
-//        encryption(pathFrom, pathTo, key);
+        encryption(pathFrom, pathTo, key);
 //        decryptionWithKey(pathTo, fileDecrypt, key);
 //        decryptionBruteForce(pathTo, fileDecrypt, fileForInstance);
         decryptionWithStatistic(pathTo, fileForInstance);
@@ -134,9 +134,7 @@ public class Main {
     public static void decryptionWithStatistic(String pathTo, String fileForInstance) {
 
         try (FileInputStream fileInputStream = new FileInputStream(pathTo);
-             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-             FileOutputStream fileOutputStream = new FileOutputStream(fileForInstance);
-             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream))) {
+             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream))) {
 
             HashMap<Character, Integer> mapa = new HashMap<>();
 
@@ -186,10 +184,40 @@ public class Main {
                 }
             }
 
-            System.out.println(mostFrequent + " " + biggest);
-            System.out.println(moreFrequent + " " + bigger);
+        /* According to statistics, the most frequent letters are "о", "е", "а", "и", "т", "н".
+          Suppose, what "mostFrequent" is one of these letters, therefore calculate "keys" these letters un order. */
 
-            System.out.println(mapa);
+            int[] chars = new int[]{15, 5, 0, 9, 19, 14}; //indexes "о", "е", "а", "и", "т", "н".
+            Scanner scanner = new Scanner(System.in);
+            for (int i = 0; i < chars.length; i++) {
+
+                int negativeKey = 0;
+                int positiveKey = mostFrequent - ALPHABET[chars[i]];
+                if (positiveKey > 0) {
+                    negativeKey = -1 * (33 - Math.abs(mostFrequent - ALPHABET[chars[i]]) % ALPHABET.length);
+                } else {
+                    negativeKey = 33 - Math.abs(mostFrequent - ALPHABET[chars[i]]) % ALPHABET.length;
+                }
+
+                System.out.println(mostFrequent + " " + biggest);
+                System.out.println(moreFrequent + " " + bigger);
+                System.out.println(positiveKey);
+                System.out.println(negativeKey);
+
+                System.out.println(mapa);
+
+                decryptionWithKey(pathTo, fileForInstance, positiveKey);
+
+                System.out.println("is result true or false? (true/false)");
+                switch (scanner.nextLine()) {
+                    case "true" :
+                        return;
+                    case "false" :
+                        continue;
+                    default :
+                        System.out.println("true or false");
+                }
+            }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -206,7 +234,7 @@ public class Main {
         }
     }
 
-    public static boolean isInsideOfALPHABET (char letter) {
+    public static boolean isInsideOfALPHABET(char letter) {
 
         for (int i = 0; i < ALPHABET.length; i++) {
             if (letter == ALPHABET[i]) {
