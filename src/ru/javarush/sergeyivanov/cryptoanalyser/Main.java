@@ -11,9 +11,9 @@ public class Main {
     private static int secretCharInd; // secretChar, который находится на позиции с индексом "i"
     private static char secretChar; // зашифрованный символ
     private static int key = 5; // секретный ключ
-    private static final char[] ALPHABET = {'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з',
+    private static final ArrayList<Character> ALPHABET = new ArrayList<>(Arrays.asList('а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з',
             'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ',
-            'ъ', 'ы', 'ь', 'э', 'ю', 'я'};
+            'ъ', 'ы', 'ь', 'э', 'ю', 'я'));
     private static final char[] SYMBOLS = {'.', ',', '"', '\'', ':', '-', '!', '?', ' '};
 
 
@@ -56,32 +56,32 @@ public class Main {
 
                     // проверяю есть ли unencryptedChar в ALPHABET или SYMBOLS.
                     // Если unencryptedChar не совпадает, пропускаем его.
-                    for (int i = 0; i < ALPHABET.length; i++) {
+                    for (int i = 0; i < ALPHABET.size(); i++) {
 
                         char tempToLowerChar = 0;
 
                         if (Character.isUpperCase(unencryptedChar)) {
                             tempToLowerChar = (char) Character.toLowerCase(unencryptedChar);
 
-                            if (tempToLowerChar == ALPHABET[i]) {
+                            if (tempToLowerChar == ALPHABET.get(i)) {
 
-                                secretCharInd = (i + key) % ALPHABET.length;
+                                secretCharInd = (i + key) % ALPHABET.size();
                                 if (secretCharInd < 0) {
-                                    secretCharInd = ALPHABET.length - Math.abs(secretCharInd);
+                                    secretCharInd = ALPHABET.size() - Math.abs(secretCharInd);
                                 }
-                                secretChar = ALPHABET[secretCharInd];
+                                secretChar = ALPHABET.get(secretCharInd);
 
                                 bufferedWriter.append(Character.toUpperCase(secretChar));
                             }
                         }
 
-                        if (unencryptedChar == ALPHABET[i]) {
+                        if (unencryptedChar == ALPHABET.get(i)) {
 
-                            secretCharInd = (i + key) % ALPHABET.length;
+                            secretCharInd = (i + key) % ALPHABET.size();
                             if (secretCharInd < 0) {
-                                secretCharInd = ALPHABET.length - Math.abs(secretCharInd);
+                                secretCharInd = ALPHABET.size() - Math.abs(secretCharInd);
                             }
-                            secretChar = ALPHABET[secretCharInd];
+                            secretChar = ALPHABET.get(secretCharInd);
 
                             bufferedWriter.append(secretChar);
                         }
@@ -187,16 +187,16 @@ public class Main {
         /* According to statistics, the most frequent letters are "о", "е", "а", "и", "т", "н".
           Suppose, what "mostFrequent" is one of these letters, therefore calculate "keys" these letters un order. */
 
-            int[] chars = new int[]{15, 5, 0, 9, 19, 14}; //indexes "о", "е", "а", "и", "т", "н".
+            char[] chars = new char[]{'о', 'е', 'а', 'и', 'т', 'н'};
             Scanner scanner = new Scanner(System.in);
             for (int i = 0; i < chars.length; i++) {
 
                 int negativeKey = 0;
-                int positiveKey = mostFrequent - ALPHABET[chars[i]];
+                int positiveKey = ALPHABET.indexOf(mostFrequent) - ALPHABET.indexOf(chars[i]);
                 if (positiveKey > 0) {
-                    negativeKey = -1 * (33 - Math.abs(mostFrequent - ALPHABET[chars[i]]) % ALPHABET.length);
+                    negativeKey = -1 * (33 - Math.abs(ALPHABET.indexOf(mostFrequent) - ALPHABET.indexOf(chars[i])) % ALPHABET.size());
                 } else {
-                    negativeKey = 33 - Math.abs(mostFrequent - ALPHABET[chars[i]]) % ALPHABET.length;
+                    negativeKey = 33 - Math.abs(ALPHABET.indexOf(mostFrequent) - ALPHABET.indexOf(chars[i])) % ALPHABET.size();
                 }
 
                 System.out.println(mostFrequent + " " + biggest);
@@ -236,8 +236,8 @@ public class Main {
 
     public static boolean isInsideOfALPHABET(char letter) {
 
-        for (int i = 0; i < ALPHABET.length; i++) {
-            if (letter == ALPHABET[i]) {
+        for (int i = 0; i < ALPHABET.size(); i++) {
+            if (letter == ALPHABET.get(i)) {
                 return true;
             }
         }
