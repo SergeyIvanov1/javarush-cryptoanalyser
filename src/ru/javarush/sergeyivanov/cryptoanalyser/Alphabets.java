@@ -1,32 +1,33 @@
 package ru.javarush.sergeyivanov.cryptoanalyser;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class Alphabets {
 
-    private static final ArrayList<Character> RUSSIAN = new ArrayList<>(Arrays.asList('а', 'б', 'в', 'г',
+    public static final char[] RUSSIAN = new char[]{'а', 'б', 'в', 'г',
             'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х',
-            'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я'));
+            'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я'};
 
-    private static final ArrayList<Character> ENGLISH = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'd', 'e',
-            'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
+    private static final char[] ENGLISH = new char[]{'a', 'b', 'c', 'd', 'e',
+            'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+
+//   private static final char[][] alphabetsArray = {RUSSIAN,ENGLISH};
 
     private Alphabets() {
     }
 
-    public static int isSymbolCyrillic(char letter) {
-        for (int i = 0; i < RUSSIAN.size(); i++) {
-            if (letter == RUSSIAN.get(i)) {
+    public static int indexOfRussian(char letter) {
+        for (int i = 0; i < RUSSIAN.length; i++) {
+            if (letter == RUSSIAN[i]) {
                 return i;
             }
         }
         return -1;
     }
 
-    public static int isSymbolLatin(char letter) {
-        int index = Collections.binarySearch(ENGLISH, letter);
+    public static int indexOfEnglish(char letter) {
+
+        int index = Arrays.binarySearch(ENGLISH, letter);
         if (index  >= 0) {
             return index;
         } else {
@@ -34,11 +35,11 @@ public class Alphabets {
         }
     }
 
-    public static ArrayList<Character> getRussian() {
+    public static char[] getRussian() {
         return RUSSIAN;
     }
 
-    public static ArrayList<Character> getEnglish() {
+    public static char[] getEnglish() {
         return ENGLISH;
     }
 }

@@ -55,17 +55,22 @@ public class Main {
                         unencryptedChar = (char) Character.toLowerCase(unencryptedChar);
                     }
 
-                    int index = Alphabets.isSymbolCyrillic((char) unencryptedChar);
-                    secretCharInd = (index + key) % Alphabets.getRussian().size();
-                    if (secretCharInd < 0) {
-                        secretCharInd = Alphabets.getRussian().size() - Math.abs(secretCharInd);
-                    }
-                    secretChar = Alphabets.getRussian().get(secretCharInd);
+                    int index = Alphabets.indexOfRussian((char) unencryptedChar);
+                    if (index >= 0) {
 
-                    if (flagUpperCase) {
-                        bufferedWriter.append(Character.toUpperCase(secretChar));
-                    } else {
-                        bufferedWriter.append(secretChar);
+                        secretCharInd = (index + key) % Alphabets.getRussian().length;
+                        if (secretCharInd < 0) {
+                            secretCharInd = Alphabets.getRussian().length - Math.abs(secretCharInd);
+                        }
+
+
+                        secretChar = Alphabets.getRussian()[secretCharInd];
+
+                        if (flagUpperCase) {
+                            bufferedWriter.append(Character.toUpperCase(secretChar));
+                        } else {
+                            bufferedWriter.append(secretChar);
+                        }
                     }
 
                 } else {
@@ -124,7 +129,7 @@ public class Main {
 
                 secretChar = Character.toLowerCase((char) value);
 
-                if (Character.isLetter(secretChar) && isInsideOfALPHABET(secretChar)) {
+                if (Character.isLetter(secretChar) && (Alphabets.indexOfRussian(secretChar) >= 0)) {
 
                     if (mapa.containsKey(secretChar)) {
                         mapa.put(secretChar, mapa.get(secretChar) + 1);
@@ -172,22 +177,16 @@ public class Main {
             Scanner scanner = new Scanner(System.in);
             for (int i = 0; i < chars.length; i++) {
 
-                int negativeKey = 0;
-                int positiveKey = Alphabets.getRussian().indexOf(mostFrequent) - Alphabets.getRussian().indexOf(chars[i]);
-                if (positiveKey > 0) {
-                    negativeKey = -1 * (Alphabets.getRussian().size() - Math.abs(Alphabets.getRussian().indexOf(mostFrequent) - Alphabets.getRussian().indexOf(chars[i])) % Alphabets.getRussian().size());
-                } else {
-                    negativeKey = Alphabets.getRussian().size() - Math.abs(Alphabets.getRussian().indexOf(mostFrequent) - Alphabets.getRussian().indexOf(chars[i])) % Alphabets.getRussian().size();
-                }
+                int foundKey = Alphabets.indexOfRussian(mostFrequent)
+                        - Alphabets.indexOfRussian(chars[i]);
 
                 System.out.println(mostFrequent + " " + biggest);
                 System.out.println(moreFrequent + " " + bigger);
-                System.out.println(positiveKey);
-                System.out.println(negativeKey);
+                System.out.println(foundKey);
 
                 System.out.println(mapa);
 
-                decryptionWithKey(pathTo, fileForInstance, positiveKey);
+                decryptionWithKey(pathTo, fileForInstance, foundKey);
 
                 System.out.println("is result true or false? (true/false)");
                 switch (scanner.nextLine()) {
@@ -213,15 +212,5 @@ public class Main {
         if (file_encrypt == null) {
             throw new NullPointerException("path equals null");
         }
-    }
-
-    public static boolean isInsideOfALPHABET(char letter) {
-
-        for (int i = 0; i < Alphabets.getRussian().size(); i++) {
-            if (letter == Alphabets.getRussian().get(i)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
