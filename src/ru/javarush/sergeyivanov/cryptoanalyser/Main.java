@@ -7,7 +7,6 @@ import java.util.*;
 public class Main {
 
     private static int unencryptedChar; //незашифрованный символ
-    private static int unencryptedCharInd; // unencryptedChar, который находится на позиции с индексом "i"
     private static int secretCharInd; // secretChar, который находится на позиции с индексом "i"
     private static char secretChar; // зашифрованный символ
     private static int key = 5; // секретный ключ
@@ -50,12 +49,10 @@ public class Main {
              FileOutputStream fileOutputStream = new FileOutputStream(pathTo);
              BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream))) {
 
-            while ((unencryptedChar = bufferedReader.read()) != -1) { //запускаю цикл чтения по 1 символу из файла
+            while ((unencryptedChar = bufferedReader.read()) != -1) {
 
                 if (Character.isLetter(unencryptedChar)) {
 
-                    // проверяю есть ли unencryptedChar в ALPHABET или SYMBOLS.
-                    // Если unencryptedChar не совпадает, пропускаем его.
                     for (int i = 0; i < ALPHABET.size(); i++) {
 
                         char tempToLowerChar = 0;
