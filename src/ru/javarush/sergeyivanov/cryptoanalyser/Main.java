@@ -1,7 +1,6 @@
 package ru.javarush.sergeyivanov.cryptoanalyser;
 
 import java.io.*;
-import java.nio.file.Path;
 import java.util.*;
 
 public class Main {
@@ -9,10 +8,8 @@ public class Main {
     private static int unencryptedChar; //незашифрованный символ
     private static int secretCharInd; // secretChar, который находится на позиции с индексом "i"
     private static char secretChar; // зашифрованный символ
-    private static int key = 5; // секретный ключ
-    private static final ArrayList<Character> ALPHABET = new ArrayList<>(Arrays.asList('а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з',
-            'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ',
-            'ъ', 'ы', 'ь', 'э', 'ю', 'я'));
+    private static int key = -28; // секретный ключ
+
     private static final char[] SYMBOLS = {'.', ',', '"', '\'', ':', '-', '!', '?', ' '};
 
 
@@ -53,35 +50,22 @@ public class Main {
 
                 if (Character.isLetter(unencryptedChar)) {
 
-                    for (int i = 0; i < ALPHABET.size(); i++) {
+                    boolean flagUpperCase = Character.isUpperCase(unencryptedChar);
+                    if (flagUpperCase) {
+                        unencryptedChar = (char) Character.toLowerCase(unencryptedChar);
+                    }
 
-                        char tempToLowerChar = 0;
+                    int index = Alphabets.isSymbolCyrillic((char) unencryptedChar);
+                    secretCharInd = (index + key) % Alphabets.getRussian().size();
+                    if (secretCharInd < 0) {
+                        secretCharInd = Alphabets.getRussian().size() - Math.abs(secretCharInd);
+                    }
+                    secretChar = Alphabets.getRussian().get(secretCharInd);
 
-                        if (Character.isUpperCase(unencryptedChar)) {
-                            tempToLowerChar = (char) Character.toLowerCase(unencryptedChar);
-
-                            if (tempToLowerChar == ALPHABET.get(i)) {
-
-                                secretCharInd = (i + key) % ALPHABET.size();
-                                if (secretCharInd < 0) {
-                                    secretCharInd = ALPHABET.size() - Math.abs(secretCharInd);
-                                }
-                                secretChar = ALPHABET.get(secretCharInd);
-
-                                bufferedWriter.append(Character.toUpperCase(secretChar));
-                            }
-                        }
-
-                        if (unencryptedChar == ALPHABET.get(i)) {
-
-                            secretCharInd = (i + key) % ALPHABET.size();
-                            if (secretCharInd < 0) {
-                                secretCharInd = ALPHABET.size() - Math.abs(secretCharInd);
-                            }
-                            secretChar = ALPHABET.get(secretCharInd);
-
-                            bufferedWriter.append(secretChar);
-                        }
+                    if (flagUpperCase) {
+                        bufferedWriter.append(Character.toUpperCase(secretChar));
+                    } else {
+                        bufferedWriter.append(secretChar);
                     }
 
                 } else {
@@ -189,11 +173,11 @@ public class Main {
             for (int i = 0; i < chars.length; i++) {
 
                 int negativeKey = 0;
-                int positiveKey = ALPHABET.indexOf(mostFrequent) - ALPHABET.indexOf(chars[i]);
+                int positiveKey = Alphabets.getRussian().indexOf(mostFrequent) - Alphabets.getRussian().indexOf(chars[i]);
                 if (positiveKey > 0) {
-                    negativeKey = -1 * (33 - Math.abs(ALPHABET.indexOf(mostFrequent) - ALPHABET.indexOf(chars[i])) % ALPHABET.size());
+                    negativeKey = -1 * (Alphabets.getRussian().size() - Math.abs(Alphabets.getRussian().indexOf(mostFrequent) - Alphabets.getRussian().indexOf(chars[i])) % Alphabets.getRussian().size());
                 } else {
-                    negativeKey = 33 - Math.abs(ALPHABET.indexOf(mostFrequent) - ALPHABET.indexOf(chars[i])) % ALPHABET.size();
+                    negativeKey = Alphabets.getRussian().size() - Math.abs(Alphabets.getRussian().indexOf(mostFrequent) - Alphabets.getRussian().indexOf(chars[i])) % Alphabets.getRussian().size();
                 }
 
                 System.out.println(mostFrequent + " " + biggest);
@@ -207,11 +191,11 @@ public class Main {
 
                 System.out.println("is result true or false? (true/false)");
                 switch (scanner.nextLine()) {
-                    case "true" :
+                    case "true":
                         return;
-                    case "false" :
+                    case "false":
                         continue;
-                    default :
+                    default:
                         System.out.println("true or false");
                 }
             }
@@ -233,8 +217,8 @@ public class Main {
 
     public static boolean isInsideOfALPHABET(char letter) {
 
-        for (int i = 0; i < ALPHABET.size(); i++) {
-            if (letter == ALPHABET.get(i)) {
+        for (int i = 0; i < Alphabets.getRussian().size(); i++) {
+            if (letter == Alphabets.getRussian().get(i)) {
                 return true;
             }
         }
