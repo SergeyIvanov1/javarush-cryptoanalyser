@@ -9,9 +9,7 @@ public class Main {
 //        String keyLine = scanner.nextLine();
 //        int key = Integer.valueOf(keyLine);
 //
-//        if (key <= 0 || key > ((int)Math.pow(2, 31) - 33)) {
-//            throw new IndexOutOfBoundsException("Key out of bounds available values");
-//        }
+//
 //
 //        System.out.println("Input the path to the file containing the text");
 //        String pathToFile = scanner.nextLine();
@@ -21,11 +19,12 @@ public class Main {
         String fileDecrypt = "file_decrypt";
         String fileForInstance = "fileForInstance";
 
-        Checks.ofPath(pathFrom, pathTo, fileDecrypt);
-
         Coder.encryption(pathFrom, pathTo, key);
 //        Decoder.decryptionWithKey(pathTo, fileDecrypt, key);
 //        Decoder.decryptionBruteForce(pathTo, fileDecrypt, fileForInstance);
         Decoder.decryptionWithStatistic(pathTo, fileForInstance);
+//        Checks.forComplianceWithFrequentWords();
+
+
     }
 }

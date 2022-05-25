@@ -4,6 +4,8 @@ import java.io.*;
 
 public class Coder {
 
+    private Coder() {}
+
     public static void encryption(String pathFrom, String pathTo, int key) {
 
         try (FileInputStream fileInputStream = new FileInputStream(pathFrom);
@@ -28,13 +30,13 @@ public class Coder {
                     if (index >= 0) {
 
                         // secretChar, который находится на позиции с индексом "i"
-                        int secretCharInd = (index + key) % Alphabets.getRussian().length;
+                        int secretCharInd = (index + key) % Alphabets.getCyrillic().length;
                         if (secretCharInd < 0) {
-                            secretCharInd = Alphabets.getRussian().length - Math.abs(secretCharInd);
+                            secretCharInd = Alphabets.getCyrillic().length - Math.abs(secretCharInd);
                         }
 
 
-                        wantedChar = Alphabets.getRussian()[secretCharInd];
+                        wantedChar = Alphabets.getCyrillic()[secretCharInd];
 
                         if (flagUpperCase) {
                             bufferedWriter.append(Character.toUpperCase(wantedChar));

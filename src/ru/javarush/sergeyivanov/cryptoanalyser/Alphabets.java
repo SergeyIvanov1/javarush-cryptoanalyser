@@ -1,14 +1,17 @@
 package ru.javarush.sergeyivanov.cryptoanalyser;
 
+import jdk.internal.vm.annotation.Stable;
+
 import java.util.Arrays;
 
 public class Alphabets {
 
-    public static final char[] RUSSIAN = new char[]{'а', 'б', 'в', 'г',
+    @Stable
+    public static final char[] CYRILLIC = new char[]{'а', 'б', 'в', 'г',
             'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х',
             'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я'};
 
-    private static final char[] ENGLISH = new char[]{'a', 'b', 'c', 'd', 'e',
+    private static final char[] LATIN = new char[]{'a', 'b', 'c', 'd', 'e',
             'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
     public static final char[] SYMBOLS = {'.', ',', '"', '\'', ':', '-', '!', '?', ' '};
@@ -20,8 +23,8 @@ public class Alphabets {
     }
 
     public static int indexOfRussian(char letter) {
-        for (int i = 0; i < RUSSIAN.length; i++) {
-            if (letter == RUSSIAN[i]) {
+        for (int i = 0; i < CYRILLIC.length; i++) {
+            if (letter == CYRILLIC[i]) {
                 return i;
             }
         }
@@ -30,7 +33,7 @@ public class Alphabets {
 
     public static int indexOfEnglish(char letter) {
 
-        int index = Arrays.binarySearch(ENGLISH, letter);
+        int index = Arrays.binarySearch(LATIN, letter);
         if (index  >= 0) {
             return index;
         } else {
@@ -38,11 +41,11 @@ public class Alphabets {
         }
     }
 
-    public static char[] getRussian() {
-        return RUSSIAN;
+    public static char[] getCyrillic() {
+        return CYRILLIC;
     }
 
-    public static char[] getEnglish() {
-        return ENGLISH;
+    public static char[] getLatin() {
+        return LATIN;
     }
 }

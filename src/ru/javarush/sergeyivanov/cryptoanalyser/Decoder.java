@@ -8,12 +8,14 @@ import java.util.Set;
 
 public class Decoder {
 
+    private Decoder() {}
+
     public static void decryptionWithKey(String pathFrom, String pathTo, int key) {
         key *= -1;
         Coder.encryption(pathFrom, pathTo, key);
     }
 
-    public static void decryptionBruteForce(String pathFrom, String pathTo, String fileForInstance) {
+    public static void decryptionBruteForceManual(String pathFrom, String pathTo, String fileForInstance) {
 
         Scanner scanner = new Scanner(System.in);
 
