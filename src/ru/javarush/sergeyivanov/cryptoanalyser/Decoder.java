@@ -15,7 +15,26 @@ public class Decoder {
         Coder.encryption(pathFrom, pathTo, key);
     }
 
-    public static void decryptionBruteForceManual(String pathFrom, String pathTo, String fileForInstance) {
+    public static void manualDecryptionBruteForce(String pathFrom, String pathTo) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        int key = 2;
+        while (!scanner.nextLine().equals("exit")) {
+            if (key == 0) {
+                key++;
+                continue;
+            }
+
+            if (key == 33) {
+                break;
+            }
+            Coder.encryption(pathFrom, pathTo, key);
+            key++;
+        }
+    }
+
+    public static void autoDecryptionBruteForce(String pathFrom, String pathTo) {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -35,7 +54,7 @@ public class Decoder {
 
     }
 
-    public static void decryptionWithStatistic(String pathTo, String fileForInstance) {
+    public static void manualDecryptionWithStatistic(String pathTo, String fileForInstance) {
 
         try (FileInputStream fileInputStream = new FileInputStream(pathTo);
              BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream))) {
@@ -124,6 +143,10 @@ public class Decoder {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public static void autoDecryptionWithStatistic(String pathTo, String fileForInstance) {
 
     }
 }
