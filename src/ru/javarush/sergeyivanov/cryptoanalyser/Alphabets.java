@@ -1,12 +1,10 @@
 package ru.javarush.sergeyivanov.cryptoanalyser;
 
-import jdk.internal.vm.annotation.Stable;
 
 import java.util.Arrays;
 
 public class Alphabets {
 
-    @Stable
     public static final char[] CYRILLIC = new char[]{'а', 'б', 'в', 'г',
             'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х',
             'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я'};
