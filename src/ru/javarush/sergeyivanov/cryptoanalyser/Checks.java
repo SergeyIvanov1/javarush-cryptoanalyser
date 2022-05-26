@@ -1,8 +1,9 @@
 package ru.javarush.sergeyivanov.cryptoanalyser;
 
 public class Checks {
-    
-    private Checks() {}
+
+    private Checks() {
+    }
 
     public static void ofPath(String path) {
 
@@ -31,19 +32,15 @@ public class Checks {
         return marker;
     }
 
-    public static int numberComplianceFrequentWords(String word) {
+    public static boolean isCorrespondFrequentWords(String word) {
 
-        int countCompliance = 0;
         for (int i = 0; i < Alphabets.STRINGS.size(); i++) {
 
-            if (word.equals(Alphabets.STRINGS.get(i))) {
-                countCompliance++;
+            if (word.equalsIgnoreCase(Alphabets.STRINGS.get(i))) {
 
-                if (countCompliance > 1) {
-                    return countCompliance;
-                }
+                return true;
             }
         }
-        return 0;
+        return false;
     }
 }

@@ -4,11 +4,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Dialog.start();
+//        Dialog.start();
 
 //        int key = -28;
-//        String pathFrom = "file";
-//        String pathTo = "file_encrypt";
+        String pathFrom = "file";
+        String pathTo = "file_encrypt";
 //        String fileDecrypt = "file_decrypt";
 //        String fileForInstance = "fileForInstance";
 
@@ -17,5 +17,6 @@ public class Main {
 //        Decoder.decryptionBruteForce(pathTo, fileDecrypt, fileForInstance);
 //        Decoder.manualDecryptionWithStatistic(pathTo, fileForInstance);
 //        Checks.forComplianceWithFrequentWords();
+        Decoder.autoDecryptionBruteForce(pathFrom, pathTo);
     }
 }
