@@ -17,61 +17,22 @@ public class Decoder {
 
         for (int key = 1; key < Alphabets.choiceOfAlphabet(Alphabets.language).length; key++) {
 
-            String pathKey = getNewFileName(pathTo, key);
+            String pathKey = getNewFileNameBF(pathTo, key);
             Coder.encryption(pathFrom, pathKey, key);
         }
     }
 
-    public static boolean autoDecryptionBruteForce(String pathFrom, String pathTo) {
+    public static void autoDecryptionBruteForce(String pathFrom, String pathTo) {
 
-        try (FileInputStream fileInputStream = new FileInputStream(pathFrom);
-             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-             FileOutputStream fileOutputStream = new FileOutputStream(pathTo);
-             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream))) {
+        for (int key = 1; key < Alphabets.choiceOfAlphabet(Alphabets.language).length; key++) {
 
-            int symbol;
-            int count = 0;
-            String wordFromFile = null;
-            String secondWordFromFile = null;
-            StringBuilder stringBuilder = new StringBuilder();
+            Coder.encryption(pathFrom, pathTo, key);
 
-            while ((symbol = bufferedReader.read()) != -1) {
-
-                if (Character.isLetter(symbol) || Character.isWhitespace(symbol)) {
-//                    char symbolChar = (char) symbol;
-
-                    if (Character.isWhitespace(symbol)) {
-
-                        wordFromFile = stringBuilder.toString();
-                        stringBuilder.delete(0, wordFromFile.length());
-
-                        if (Checks.isCorrespondFrequentWords(wordFromFile) &&
-                                !(wordFromFile.equalsIgnoreCase(secondWordFromFile))) {
-
-                            count++;
-                            secondWordFromFile = wordFromFile;
-
-                            // если count > 1, значит два разных слова из списка частых слов
-                            // совпали с содержимым pathFrom
-                            if (count > 1) {
-
-                                return true;
-                            }
-                        }
-                    } else {
-                        stringBuilder.append(symbol);
-                    }
-                }
+            if (Checks.autoSelectOfCorrectDecryption(pathTo)) {
+                break;
             }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return false;
     }
-
 
     public static void manualDecryptionWithStatistic(String pathFrom, String pathTo) {
 
@@ -131,29 +92,16 @@ public class Decoder {
              */
 
             char[] chars = new char[]{'о', 'е', 'а', 'и', 'т', 'н'};
-            Scanner scanner = new Scanner(System.in);
+
             for (int i = 0; i < chars.length; i++) {
 
                 int foundKey = Alphabets.getIndex(mostFrequent, Alphabets.language)
                         - Alphabets.getIndex(chars[i], Alphabets.language);
 
-                System.out.println(mostFrequent + " " + biggest);
-                System.out.println(moreFrequent + " " + bigger);
-                System.out.println(foundKey);
+                String pathKey = getNewFileNameSA(pathTo, foundKey);
 
-                System.out.println(mapa);
+                decryptionWithKey(pathFrom, pathKey, foundKey);
 
-                decryptionWithKey(pathFrom, pathTo, foundKey);
-
-                System.out.println("is result true or false? (true/false)");
-                switch (scanner.nextLine()) {
-                    case "true":
-                        return;
-                    case "false":
-                        continue;
-                    default:
-                        System.out.println("true or false");
-                }
             }
 
         } catch (FileNotFoundException e) {
@@ -168,8 +116,13 @@ public class Decoder {
 
     }
 
-    public static String getNewFileName(String pathTo, int key) {
+    public static String getNewFileNameBF(String pathTo, int key) {
         int indexOfDot = pathTo.lastIndexOf(".");
-        return pathTo.substring(0, indexOfDot) + key + pathTo.substring(indexOfDot);
+        return pathTo.substring(0, indexOfDot) + "bruteForce" + key + pathTo.substring(indexOfDot);
+    }
+
+    public static String getNewFileNameSA(String pathTo, int key) {
+        int indexOfDot = pathTo.lastIndexOf(".");
+        return pathTo.substring(0, indexOfDot) + "statisticAnalise" + key + pathTo.substring(indexOfDot);
     }
 }

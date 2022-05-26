@@ -1,5 +1,7 @@
 package ru.javarush.sergeyivanov.cryptoanalyser;
 
+import java.io.*;
+
 public class Checks {
 
     private Checks() {
@@ -40,6 +42,52 @@ public class Checks {
 
                 return true;
             }
+        }
+        return false;
+    }
+
+    public  static boolean autoSelectOfCorrectDecryption(String pathTo) {
+        try (FileInputStream fileInputStream = new FileInputStream(pathTo);
+             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream))) {
+
+            int symbol;
+            int count = 0;
+            String wordFromFile = null;
+            String secondWordFromFile = null;
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while ((symbol = bufferedReader.read()) != -1) {
+
+                if (Character.isLetter(symbol) || Character.isWhitespace(symbol)) {
+
+                    if (Character.isWhitespace(symbol)) {
+
+                        wordFromFile = stringBuilder.toString();
+                        stringBuilder.delete(0, wordFromFile.length());
+
+                        if (Checks.isCorrespondFrequentWords(wordFromFile) &&
+                                !(wordFromFile.equalsIgnoreCase(secondWordFromFile))) {
+
+                            count++;
+                            secondWordFromFile = wordFromFile;
+
+                            // если count > 1, значит два разных слова из Alphabets.STRINGS
+                            // совпали с содержимым pathFrom
+                            if (count > 1) {
+
+                                return true;
+                            }
+                        }
+                    } else {
+                        stringBuilder.append(symbol);
+                    }
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return false;
     }
