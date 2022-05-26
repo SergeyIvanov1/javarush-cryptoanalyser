@@ -7,6 +7,8 @@ public class Dialog {
     private static String pathFrom;
     private static String pathTo;
     private static String key;
+    private static String SELECTEDFUNCTIONENCODE = "шифрования";
+    private static String SELECTEDFUNCTIONDECODE = "расшифровки";
     private static final String QUERYCONTINUATION = "Функция завершена. "
             + "Для продолжения программы выберите пункт меню и напишите его номер, а для выхода \"exit\"";
 
@@ -15,8 +17,19 @@ public class Dialog {
     public static void start(){
         Scanner console = new Scanner(System.in);
 
-        System.out.println("Программа криптоаланализатор.\n"
-                + "Выберите пункт меню:\n"
+        System.out.println("Программа криптоанализатор.\n");
+
+        System.out.println("Выберите язык текста для шифрования/расшифрования:" +
+                " английский или русский (введите \"en\" или \"ru\"");
+        if (console.nextLine().equals("en")) {
+            Alphabets.language = "Latin";
+        } else if (console.nextLine().equals("ru")) {
+            Alphabets.language = "Cyrillic";
+        } else {
+            System.out.println("введите \"en\" или \"ru\"");
+        }
+
+        System.out.println("\nВыберите пункт меню:\n"
                 + "1 - Зашифровать текст\n"
                 + "2 - Расшифровать текст, используя известный ключ\n"
                 + "3 - Расшифровать текст, используя метод \"Грубой силы\", путем ручного подбора\n"
@@ -24,12 +37,11 @@ public class Dialog {
                 + "5 - Расшифровать текст, используя метод \"Статического анализа\", путем ручного подбора\n"
                 + "6 - Расшифровать текст, используя метод \"Статического анализа\", путем автоматического подбора\n");
 
-        String choice = null;
+        String choice = "";
         while (!(choice = console.nextLine()).equalsIgnoreCase("exit")) {
             switch (choice) {
                 case "1":
-                    String selectFunction = "шифрования";
-                    Dialog.requestPath(console, selectFunction);
+                    Dialog.requestPath(console, SELECTEDFUNCTIONENCODE);
                     Dialog.requestKey(console);
 
                     Coder.encryption(pathFrom, pathTo, Integer.parseInt(key));
@@ -38,8 +50,7 @@ public class Dialog {
                     break;
 
                 case "2":
-                    selectFunction = "расшифровки";
-                    Dialog.requestPath(console, selectFunction);
+                    Dialog.requestPath(console, SELECTEDFUNCTIONDECODE);
                     Dialog.requestKey(console);
 
 
@@ -49,17 +60,18 @@ public class Dialog {
                     break;
 
                 case "3":
-                    selectFunction = "расшифровки";
-                    Dialog.requestPath(console, selectFunction);
+                    Dialog.requestPath(console, SELECTEDFUNCTIONDECODE);
 
                     Decoder.manualDecryptionBruteForce(pathFrom, pathTo);
+
+                    System.out.println("Результат работы программы сохранен в файлы по адресу: " + pathTo
+                            + "+ key");
 
                     System.out.println(QUERYCONTINUATION);
                     break;
 
                 case "4":
-                    selectFunction = "расшифровки";
-                    Dialog.requestPath(console, selectFunction);
+                    Dialog.requestPath(console, SELECTEDFUNCTIONDECODE);
 
                     Decoder.autoDecryptionBruteForce(pathFrom, pathTo);
 
@@ -67,8 +79,7 @@ public class Dialog {
                     break;
 
                 case "5":
-                    selectFunction = "расшифровки";
-                    Dialog.requestPath(console, selectFunction);
+                    Dialog.requestPath(console, SELECTEDFUNCTIONDECODE);
 
                     Decoder.manualDecryptionWithStatistic(pathFrom, pathTo);
 
@@ -76,8 +87,7 @@ public class Dialog {
                     break;
 
                 case "6":
-                    selectFunction = "расшифровки";
-                    Dialog.requestPath(console, selectFunction);
+                    Dialog.requestPath(console, SELECTEDFUNCTIONDECODE);
 
                     Decoder.autoDecryptionWithStatistic(pathFrom, pathTo);
 
@@ -85,18 +95,18 @@ public class Dialog {
                     break;
 
                 default:
-                    System.out.println("Программа ожидает номер пункта меню либо \"exit\"");
+                    System.out.println("Программа ожидает номер пункта меню либо \"exit\" для выхода");
             }
         }
     }
 
-    private static void requestPath(Scanner console, String value) {
-        System.out.println("Введите адрес файла в формате .txt, в котором находится текст для " + value);
+    private static void requestPath(Scanner console, String selectFunction) {
+        System.out.println("Введите адрес файла в формате .txt, в котором находится текст для " + selectFunction);
         pathFrom = console.nextLine();
         Checks.ofPath(pathFrom);
 
         System.out.println("Введите адрес файла в формате .txt,"
-                + "в который необходимо сохранить текст после " + value);
+                + "в который необходимо сохранить текст после " + selectFunction);
         pathTo = console.nextLine();
         Checks.ofPath(pathTo);
     }
@@ -104,7 +114,7 @@ public class Dialog {
     private static void requestKey(Scanner console){
         System.out.println("Введите ключ");
         key = console.nextLine();
-        while (Checks.notKey(key)) {
+        while (Checks.notKey(key, Alphabets.language)) {
             key = console.nextLine();
         }
     }

@@ -17,37 +17,22 @@ public class Decoder {
 
     public static void manualDecryptionBruteForce(String pathFrom, String pathTo) {
 
-        Scanner scanner = new Scanner(System.in);
+        for (int key = 1; key < Alphabets.choiceOfAlphabet(Alphabets.language).length; key++) {
 
-        int key = 2;
-        while (!scanner.nextLine().equals("exit")) {
-            if (key == 0) {
-                key++;
-                continue;
-            }
-
-            if (key == 33) {
-                break;
-            }
-            Coder.encryption(pathFrom, pathTo, key);
-            key++;
+            String pathKey = getNewFileName(pathTo, key);
+            Coder.encryption(pathFrom, pathKey, key);
         }
+
+
     }
 
     public static void autoDecryptionBruteForce(String pathFrom, String pathTo) {
 
         Scanner scanner = new Scanner(System.in);
 
-        int key = 2;
+        int key = 1;
         while (!scanner.nextLine().equals("exit")) {
-            if (key == 0) {
-                key++;
-                continue;
-            }
 
-            if (key == 33) {
-                break;
-            }
             Coder.encryption(pathFrom, pathTo, key);
             key++;
         }
@@ -66,7 +51,7 @@ public class Decoder {
 
                 char wantedChar = Character.toLowerCase((char) value);
 
-                if (Character.isLetter(wantedChar) && (Alphabets.indexOfRussian(wantedChar) >= 0)) {
+                if (Character.isLetter(wantedChar) && (Alphabets.getIndex(wantedChar, Alphabets.language) >= 0)) {
 
                     if (mapa.containsKey(wantedChar)) {
                         mapa.put(wantedChar, mapa.get(wantedChar) + 1);
@@ -116,8 +101,8 @@ public class Decoder {
             Scanner scanner = new Scanner(System.in);
             for (int i = 0; i < chars.length; i++) {
 
-                int foundKey = Alphabets.indexOfRussian(mostFrequent)
-                        - Alphabets.indexOfRussian(chars[i]);
+                int foundKey = Alphabets.getIndex(mostFrequent, Alphabets.language)
+                        - Alphabets.getIndex(chars[i], Alphabets.language);
 
                 System.out.println(mostFrequent + " " + biggest);
                 System.out.println(moreFrequent + " " + bigger);
@@ -148,5 +133,10 @@ public class Decoder {
 
     public static void autoDecryptionWithStatistic(String pathTo, String fileForInstance) {
 
+    }
+
+    public static String getNewFileName(String pathTo, int key) {
+        int indexOfDot = pathTo.lastIndexOf(".");
+        return pathTo.substring(0, indexOfDot) + key + pathTo.substring(indexOfDot);
     }
 }

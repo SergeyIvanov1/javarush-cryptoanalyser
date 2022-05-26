@@ -13,11 +13,9 @@ public class Coder {
              FileOutputStream fileOutputStream = new FileOutputStream(pathTo);
              BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream))) {
 
-            //незашифрованный символ
             int unencryptedChar;
             while ((unencryptedChar = bufferedReader.read()) != -1) {
 
-                // зашифрованный символ
                 char wantedChar;
                 if (Character.isLetter(unencryptedChar)) {
 
@@ -26,17 +24,17 @@ public class Coder {
                         unencryptedChar = (char) Character.toLowerCase(unencryptedChar);
                     }
 
-                    int index = Alphabets.indexOfRussian((char) unencryptedChar);
+                    int index = Alphabets.getIndex((char) unencryptedChar, Alphabets.language);
                     if (index >= 0) {
 
-                        // secretChar, который находится на позиции с индексом "i"
-                        int secretCharInd = (index + key) % Alphabets.getCyrillic().length;
+                        int secretCharInd = (index + key) % Alphabets.choiceOfAlphabet(Alphabets.language).length;
                         if (secretCharInd < 0) {
-                            secretCharInd = Alphabets.getCyrillic().length - Math.abs(secretCharInd);
+                            secretCharInd = Alphabets.choiceOfAlphabet(Alphabets.language).length
+                                    - Math.abs(secretCharInd);
                         }
 
 
-                        wantedChar = Alphabets.getCyrillic()[secretCharInd];
+                        wantedChar = Alphabets.choiceOfAlphabet(Alphabets.language)[secretCharInd];
 
                         if (flagUpperCase) {
                             bufferedWriter.append(Character.toUpperCase(wantedChar));
