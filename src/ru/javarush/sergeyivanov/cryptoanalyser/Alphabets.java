@@ -9,9 +9,8 @@ public class Alphabets {
     public static String language = "Cyrillic";
 
     public static final ArrayList<String> STRINGS = new ArrayList<>(Arrays.asList("и",
-            "в", "не", "на", "я", "быть", "он", "с", "что", "а",
-            "по", "это", "она", "этот", "к", "но", "они", "мы", "как", "из", "у", "который", "то", "за", "свой", "что",
-            "весь", "год", "от", "так", "о", "для", "ты", "же", "все", "тот", "мочь", "вы", "человек", "такой", "его",
+            "не", "на", "быть", "он", "что", "это", "она", "этот", "но", "они", "мы", "как", "из", "который", "то", "за", "свой", "что",
+            "весь", "год", "от", "так", "для", "ты", "же", "все", "тот", "мочь", "вы", "человек", "такой", "его",
             "сказать", "только", "или", "ещё", "бы", "себя", "один", "как", "уже", "до", "время", "если", "сам",
             "когда", "другой", "вот", "говорить", "наш", "мой", "знать", "стать", "при", "чтобы", "дело", "жизнь",
             "кто", "первый", "очень", "два", "день", "её", "новый", "рука", "даже", "во", "со", "раз", "где", "там",
@@ -69,7 +68,7 @@ public class Alphabets {
             "характер", "борьба", "использование", "кстати", "подойти", "размер", "удаться", "образование",
             "получать", "мальчик", "кровь", "район", "небо", "американский", "армия", "класс", "представитель",
             "участие", "девочка", "политика", "сначала", "герой", "картина", "широкий", "доллар", "спина",
-            "территория", "мировой", "пол", "тяжелый", "довольно", "поле", "ж", "изменение", "умереть", "более",
+            "территория", "мировой", "пол", "тяжелый", "довольно", "поле", "изменение", "умереть", "более",
             "направление", "рисунок", "течение", "возможный", "церковь", "банк", "отдельный", "средний", "красивый",
             "сцена", "население", "большинство", "сесть", "двадцать", "случиться", "музыка", "короткий", "правда",
             "проходить", "составлять", "свобода", "память", "приходиться", "причем", "команда", "установить", "союз",
@@ -119,7 +118,7 @@ public class Alphabets {
     private static final char[] LATIN = new char[]{'a', 'b', 'c', 'd', 'e',
             'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
-    public static final char[] SYMBOLS = {'.', ',', '"', '\'', ':', '-', '!', '?', ' ', '\n'};
+    public static final char[] SYMBOLS = {'\n', ' ', '!', '"', '\'', ',', '-', '.', ':', '?'};
 
     // According to statistics, the any letters are meeting most frequently.
     public static final char[] mostFrequentLettersRu = new char[]{'о', 'е', 'а', 'и', 'т', 'н'};
@@ -133,13 +132,14 @@ public class Alphabets {
 
     public static int getIndex(char letter, String language) {
         if (language.equals("Cyrillic"))
-        for (int i = 0; i < CYRILLIC.length; i++) {
-            if (letter == CYRILLIC[i]) {
-                return i;
+            for (int i = 0; i < CYRILLIC.length; i++) {
+                if (letter == CYRILLIC[i]) {
+                    return i;
+                }
             }
-        } else if (language.equals("Latin")) {
+        else if (language.equals("Latin")) {
             int index = Arrays.binarySearch(LATIN, letter);
-            if (index  >= 0) {
+            if (index >= 0) {
                 return index;
             } else {
                 return -1;
@@ -148,25 +148,34 @@ public class Alphabets {
         return -1;
     }
 
-    public static char[] choiceOfAlphabet(String name){
-        if (name.equals("Cyrillic")) {
-            return CYRILLIC;
-        } else if (name.equals("Latin")) {
-            return LATIN;
-        } else if (name.equals("Symbols")) {
-            return SYMBOLS;
+    public static boolean isSymbol(char symbol) {
+        int index = Arrays.binarySearch(SYMBOLS, symbol);
+        if (index >= 0) {
+            return true;
+        } else {
+            return false;
         }
-        return new char[0];
     }
 
-    public static char[] getGreatestFrequentLettersOfAlphabets(String language) {
-
-        if (language.equals("Cyrillic")) {
-            return mostFrequentLettersRu;
-        } else if (language.equals("Latin")) {
-            return mostFrequentLettersEn;
+        public static char[] choiceOfAlphabet (String name){
+            if (name.equals("Cyrillic")) {
+                return CYRILLIC;
+            } else if (name.equals("Latin")) {
+                return LATIN;
+            } else if (name.equals("Symbols")) {
+                return SYMBOLS;
+            }
+            return new char[0];
         }
-        return new char[0];
-    }
 
-}
+        public static char[] getGreatestFrequentLettersOfAlphabets (String language){
+
+            if (language.equals("Cyrillic")) {
+                return mostFrequentLettersRu;
+            } else if (language.equals("Latin")) {
+                return mostFrequentLettersEn;
+            }
+            return new char[0];
+        }
+
+    }

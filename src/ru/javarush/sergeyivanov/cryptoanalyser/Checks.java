@@ -4,6 +4,8 @@ import java.io.*;
 
 public class Checks {
 
+    private static final int NUMBEROFLETTERSFROMBEGINNING = 4;
+
     private Checks() {
     }
 
@@ -37,8 +39,20 @@ public class Checks {
     public static boolean isCorrespondFrequentWords(String word) {
 
         for (int i = 0; i < Alphabets.STRINGS.size(); i++) {
+            String value;
+            String fromStrings = Alphabets.STRINGS.get(i);
 
-            if (word.equalsIgnoreCase(Alphabets.STRINGS.get(i))) {
+            if (word.length() > NUMBEROFLETTERSFROMBEGINNING
+                    && fromStrings.length() > NUMBEROFLETTERSFROMBEGINNING) {
+
+                value = word.substring(0, NUMBEROFLETTERSFROMBEGINNING);
+                fromStrings = fromStrings.substring(0, NUMBEROFLETTERSFROMBEGINNING);
+
+                if (value.equalsIgnoreCase(fromStrings)) {
+                    return true;
+                }
+
+            } else if (word.equalsIgnoreCase(fromStrings)) {
 
                 return true;
             }
@@ -61,7 +75,7 @@ public class Checks {
 
                 if (Character.isLetter(symbol) || Character.isWhitespace(symbol)) {
 
-                    if (Character.isWhitespace(symbol)) {
+                    if (Character.isWhitespace(symbol) || Alphabets.isSymbol((char) symbol)) {
 
                         wordFromFile = stringBuilder.toString();
                         stringBuilder.delete(0, wordFromFile.length());
@@ -70,7 +84,7 @@ public class Checks {
                                 !(wordFromFile.equalsIgnoreCase(secondWordFromFile))) {
 
                             count++;
-                            secondWordFromFile = wordFromFile;
+
 
                             // если count > 1, значит два разных слова из Alphabets.STRINGS
                             // совпали с содержимым pathFrom
@@ -79,9 +93,10 @@ public class Checks {
                                 System.out.println(wordFromFile + "\n" + secondWordFromFile + "\n" + "true");
                                 return true;
                             }
+                            secondWordFromFile = wordFromFile;
                         }
                     } else {
-                        stringBuilder.append(symbol);
+                        stringBuilder.append((char) symbol);
                     }
                 }
             }

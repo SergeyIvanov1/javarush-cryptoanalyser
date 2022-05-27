@@ -6,11 +6,12 @@ public class Main {
 
 //        Dialog.start();
 
-//        int key = 65;
+        int key = 65;
         String pathFrom = "file_encrypt.txt";
-        String pathTo = "fileForInstance.txt";
-//        Decoder.manualDecryptionBruteForce(pathFrom, pathTo);
-        Decoder.autoDecryptionBruteForce(pathFrom, pathTo);
+        String pathTo = "C:\\Users\\User\\IdeaProjects\\javarush-cryptoanalyser\\src\\TestDirectory\\fileForInstance.txt";
+        Coder.encryption("file.txt", pathFrom, 2);
+        Decoder.autoDecryptionWithStatistic(pathFrom, pathTo);
+//        Decoder.manualDecryptionWithStatistic(pathFrom, pathTo);
 //
     }
 }

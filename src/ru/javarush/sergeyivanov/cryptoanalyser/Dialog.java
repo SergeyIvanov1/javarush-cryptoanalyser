@@ -71,9 +71,6 @@ public class Dialog {
 
                     Decoder.manualDecryptionBruteForce(pathFrom, pathTo);
 
-                    System.out.println("Результат работы программы сохранен в файлы по адресу: " + pathTo
-                            + "+ key");
-
                     System.out.println(QUERYCONTINUATION);
                     break;
 
@@ -116,6 +113,18 @@ public class Dialog {
                 + "в который необходимо сохранить текст после " + selectFunction);
         pathTo = console.nextLine();
         Checks.ofPath(pathTo);
+    }
+
+    private static void requestFileAddress(Scanner console, String selectFunction) {
+        System.out.println("Введите адрес файла в формате .txt, в котором находится текст для " + selectFunction);
+        pathFrom = console.nextLine();
+        Checks.ofPath(pathFrom);
+    }
+
+    private static void requestDirectoryAddress(Scanner console, String selectFunction) {
+        System.out.println("Введите адрес папки, в которую сохранить результат " + selectFunction);
+        pathTo = console.nextLine();
+        Checks.ofPath(pathFrom);
     }
 
     private static void requestKey(Scanner console){
