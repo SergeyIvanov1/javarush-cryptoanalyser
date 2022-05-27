@@ -47,6 +47,7 @@ public class Checks {
     }
 
     public  static boolean autoSelectOfCorrectDecryption(String pathTo) {
+
         try (FileInputStream fileInputStream = new FileInputStream(pathTo);
              BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream))) {
 
@@ -75,6 +76,7 @@ public class Checks {
                             // совпали с содержимым pathFrom
                             if (count > 1) {
 
+                                System.out.println(wordFromFile + "\n" + secondWordFromFile + "\n" + "true");
                                 return true;
                             }
                         }

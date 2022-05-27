@@ -7,8 +7,8 @@ public class Dialog {
     private static String pathFrom;
     private static String pathTo;
     private static String key;
-    private static String SELECTEDFUNCTIONENCODE = "шифрования";
-    private static String SELECTEDFUNCTIONDECODE = "расшифровки";
+    private static final String SELECTEDFUNCTIONENCODE = "шифрования";
+    private static final String SELECTEDFUNCTIONDECODE = "расшифровки";
     private static final String QUERYCONTINUATION = "Функция завершена. "
             + "Для продолжения программы выберите пункт меню и напишите его номер, а для выхода \"exit\"";
 
@@ -20,13 +20,20 @@ public class Dialog {
         System.out.println("Программа криптоанализатор.\n");
 
         System.out.println("Выберите язык текста для шифрования/расшифрования:" +
-                " английский или русский (введите \"en\" или \"ru\"");
-        if (console.nextLine().equals("en")) {
-            Alphabets.language = "Latin";
-        } else if (console.nextLine().equals("ru")) {
-            Alphabets.language = "Cyrillic";
-        } else {
-            System.out.println("введите \"en\" или \"ru\"");
+                " английский или русский (введите \"en\" или \"ru\")");
+
+        while (true) {
+            String answer = console.nextLine();
+
+            if (answer.equalsIgnoreCase("en")) {
+                Alphabets.language = "Latin";
+                break;
+            } else if (answer.equalsIgnoreCase("ru")) {
+                Alphabets.language = "Cyrillic";
+                break;
+            } else {
+                System.out.println("введите \"en\" или \"ru\"");
+            }
         }
 
         System.out.println("\nВыберите пункт меню:\n"
@@ -37,7 +44,7 @@ public class Dialog {
                 + "5 - Расшифровать текст, используя метод \"Статического анализа\", путем ручного подбора\n"
                 + "6 - Расшифровать текст, используя метод \"Статического анализа\", путем автоматического подбора\n");
 
-        String choice = "";
+        String choice;
         while (!(choice = console.nextLine()).equalsIgnoreCase("exit")) {
             switch (choice) {
                 case "1":
@@ -105,7 +112,7 @@ public class Dialog {
         pathFrom = console.nextLine();
         Checks.ofPath(pathFrom);
 
-        System.out.println("Введите адрес файла в формате .txt,"
+        System.out.println("Введите адрес файла в формате .txt, "
                 + "в который необходимо сохранить текст после " + selectFunction);
         pathTo = console.nextLine();
         Checks.ofPath(pathTo);

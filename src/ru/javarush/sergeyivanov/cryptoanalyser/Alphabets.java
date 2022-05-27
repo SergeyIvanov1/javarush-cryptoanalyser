@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class Alphabets {
 
-    public static String language;
+    public static String language = "Cyrillic";
 
     public static final ArrayList<String> STRINGS = new ArrayList<>(Arrays.asList("и",
             "в", "не", "на", "я", "быть", "он", "с", "что", "а",

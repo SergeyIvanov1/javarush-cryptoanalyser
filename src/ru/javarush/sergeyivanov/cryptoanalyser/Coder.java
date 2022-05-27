@@ -33,7 +33,6 @@ public class Coder {
                                     - Math.abs(secretCharInd);
                         }
 
-
                         wantedChar = Alphabets.choiceOfAlphabet(Alphabets.language)[secretCharInd];
 
                         if (flagUpperCase) {
