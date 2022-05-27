@@ -121,6 +121,10 @@ public class Alphabets {
 
     public static final char[] SYMBOLS = {'.', ',', '"', '\'', ':', '-', '!', '?', ' ', '\n'};
 
+    // According to statistics, the any letters are meeting most frequently.
+    public static final char[] mostFrequentLettersRu = new char[]{'о', 'е', 'а', 'и', 'т', 'н'};
+    public static final char[] mostFrequentLettersEn = new char[]{'о', 'е', 'а', 'и', 'т', 'н'};
+
 
 //   private static final char[][] alphabetsArray = {RUSSIAN,ENGLISH};
 
@@ -154,4 +158,15 @@ public class Alphabets {
         }
         return new char[0];
     }
+
+    public static char[] getGreatestFrequentLettersOfAlphabets(String language) {
+
+        if (language.equals("Cyrillic")) {
+            return mostFrequentLettersRu;
+        } else if (language.equals("Latin")) {
+            return mostFrequentLettersEn;
+        }
+        return new char[0];
+    }
+
 }

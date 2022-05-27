@@ -36,6 +36,48 @@ public class Decoder {
 
     public static void manualDecryptionWithStatistic(String pathFrom, String pathTo) {
 
+        char[] chars = Alphabets.getGreatestFrequentLettersOfAlphabets(Alphabets.language);
+
+        for (int ind = 0; ind < chars.length; ind++) {
+
+            int foundKey = Alphabets.getIndex(getMostFrequentLetter(pathFrom), Alphabets.language)
+                    - Alphabets.getIndex(chars[ind], Alphabets.language);
+
+            String pathKey = getNewFileNameSA(pathTo, foundKey);
+
+            decryptionWithKey(pathFrom, pathKey, foundKey);
+        }
+    }
+
+    public static void autoDecryptionWithStatistic(String pathFrom, String pathTo) {
+
+        char[] chars = Alphabets.getGreatestFrequentLettersOfAlphabets(Alphabets.language);
+
+        for (int ind = 0; ind < chars.length; ind++) {
+
+            int foundKey = Alphabets.getIndex(getMostFrequentLetter(pathFrom), Alphabets.language)
+                    - Alphabets.getIndex(chars[ind], Alphabets.language);
+
+            decryptionWithKey(pathFrom, pathTo, foundKey);
+
+            if (Checks.autoSelectOfCorrectDecryption(pathTo)) {
+                break;
+            }
+        }
+    }
+
+    public static String getNewFileNameBF(String pathTo, int key) {
+        int indexOfDot = pathTo.lastIndexOf(".");
+        return pathTo.substring(0, indexOfDot) + "bruteForce" + key + pathTo.substring(indexOfDot);
+    }
+
+    public static String getNewFileNameSA(String pathTo, int key) {
+        int indexOfDot = pathTo.lastIndexOf(".");
+        return pathTo.substring(0, indexOfDot) + "statisticAnalise" + key + pathTo.substring(indexOfDot);
+    }
+
+    public static char getMostFrequentLetter(String pathFrom) {
+
         try (FileInputStream fileInputStream = new FileInputStream(pathFrom);
              BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream))) {
 
@@ -56,10 +98,8 @@ public class Decoder {
                 }
             }
 
-            char mostFrequent = 0;
-            char moreFrequent = 0;
-            int biggest = 0;
-            int bigger = 0;
+            char maxRepetitions = 0;
+            int max = 0;
 
             Set<Map.Entry<Character, Integer>> entries = mapa.entrySet();
             for (Map.Entry<Character, Integer> pair : entries) {
@@ -67,62 +107,20 @@ public class Decoder {
                 char character = pair.getKey();
                 int amount = pair.getValue();
 
-                if (amount > biggest) {
+                if (amount > max) {
 
-                    moreFrequent = mostFrequent;
-                    bigger = biggest;
-                    mostFrequent = character;
-                    biggest = amount;
-
-                } else if (amount == biggest) {
-
-                    moreFrequent = character;
-                    bigger = amount;
-
-                } else if (amount > bigger) {
-
-                    moreFrequent = character;
-                    bigger = amount;
+                    maxRepetitions = character;
+                    max = amount;
                 }
             }
 
-            /*
-             * According to statistics, the most frequent letters are "о", "е", "а", "и", "т", "н".
-             * Suppose, what "mostFrequent" is one of these letters, therefore calculate "keys" these letters un order.
-             */
-
-            char[] chars = new char[]{'о', 'е', 'а', 'и', 'т', 'н'};
-
-            for (int i = 0; i < chars.length; i++) {
-
-                int foundKey = Alphabets.getIndex(mostFrequent, Alphabets.language)
-                        - Alphabets.getIndex(chars[i], Alphabets.language);
-
-                String pathKey = getNewFileNameSA(pathTo, foundKey);
-
-                decryptionWithKey(pathFrom, pathKey, foundKey);
-
-            }
+            return maxRepetitions;
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public static void autoDecryptionWithStatistic(String pathTo, String fileForInstance) {
-
-    }
-
-    public static String getNewFileNameBF(String pathTo, int key) {
-        int indexOfDot = pathTo.lastIndexOf(".");
-        return pathTo.substring(0, indexOfDot) + "bruteForce" + key + pathTo.substring(indexOfDot);
-    }
-
-    public static String getNewFileNameSA(String pathTo, int key) {
-        int indexOfDot = pathTo.lastIndexOf(".");
-        return pathTo.substring(0, indexOfDot) + "statisticAnalise" + key + pathTo.substring(indexOfDot);
+        return 0;
     }
 }
