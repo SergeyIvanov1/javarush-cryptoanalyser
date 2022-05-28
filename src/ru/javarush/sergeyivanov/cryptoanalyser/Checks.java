@@ -38,9 +38,9 @@ public class Checks {
 
     public static boolean isCorrespondFrequentWords(String word) {
 
-        for (int i = 0; i < Alphabets.STRINGS.size(); i++) {
+        for (int i = 0; i < Alphabets.getArrayFrequentWords(Alphabets.language).length; i++) {
             String value;
-            String fromStrings = Alphabets.STRINGS.get(i);
+            String fromStrings = Alphabets.getArrayFrequentWords(Alphabets.language)[i];
 
             if (word.length() > NUMBEROFLETTERSFROMBEGINNING
                     && fromStrings.length() > NUMBEROFLETTERSFROMBEGINNING) {

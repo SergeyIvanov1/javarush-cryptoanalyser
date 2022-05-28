@@ -1,15 +1,13 @@
 package ru.javarush.sergeyivanov.cryptoanalyser;
 
-
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Alphabets {
 
     public static String language = "Cyrillic";
 
-    public static final ArrayList<String> STRINGS = new ArrayList<>(Arrays.asList("и",
-            "не", "на", "быть", "он", "что", "это", "она", "этот", "но", "они", "мы", "как", "из", "который", "то", "за", "свой", "что",
+    public static final String[] RUSTRINGS = {"и", "не", "на", "быть", "он",
+            "что", "это", "она", "этот", "но", "они", "мы", "как", "из", "который", "то", "за", "свой", "что",
             "весь", "год", "от", "так", "для", "ты", "же", "все", "тот", "мочь", "вы", "человек", "такой", "его",
             "сказать", "только", "или", "ещё", "бы", "себя", "один", "как", "уже", "до", "время", "если", "сам",
             "когда", "другой", "вот", "говорить", "наш", "мой", "знать", "стать", "при", "чтобы", "дело", "жизнь",
@@ -109,11 +107,108 @@ public class Alphabets {
             "нормальный", "едва", "желать", "ожидать", "некий", "звезда", "городской", "выбор", "соответствующий",
             "масса", "составить", "итог", "сестра", "что", "шесть", "ясно", "практика", "сто", "нести", "определить",
             "проведение", "карман", "любимый", "родной", "западный", "обязательно", "слава", "кухня", "определение",
-            "пользоваться", "быстрый"));
+            "пользоваться", "быстрый"};
 
-    public static final char[] CYRILLIC = new char[]{'а', 'б', 'в', 'г',
-            'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х',
-            'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я'};
+    public static final String[] ENSTRINGS = {"the", "be", "of", "and",
+            "in", "to", "have", "it", "for", "that", "you", "he", "on", "with", "do", "at", "by", "not", "this",
+            "but", "from", "they", "his", "she", "or", "which", "as", "we", "say", "will", "would", "can", "if",
+            "their", "go", "what", "there", "all", "get", "her", "make", "who", "out", "up", "see", "know", "time",
+            "take", "them", "some - несколько, какой", "could", "so", "him", "year", "into", "its", "then", "think",
+            "my", "come", "than", "more", "about", "now", "last", "your", "me", "no", "other", "give", "just",
+            "should", "these", "people", "also", "well", "any", "only", "new", "very", "when", "may", "way",
+            "look", "like", "use", "such", "how", "because", "good", "find", "man", "our", "want", "day",
+            "between", "even", "many", "those", "after", "down", "yeah", "thing", "tell - сказать (кому",
+            "through", "back", "still", "must", "child", "here", "over - над, выше (предлог); пере", "too", "put",
+            "own", "work", "become", "old", "government", "mean", "part", "leave", "life", "great", "where", "case",
+            "woman", "seem", "same", "us", "need", "feel", "each", "might", "much", "ask", "group", "number", "yes",
+            "however", "another", "again", "world", "area", "show", "course", "shall", "under", "problem", "against",
+            "never", "most", "service", "try", "call", "hand", "party", "high", "something - что", "school", "small",
+            "place", "before", "why", "while", "away", "keep", "point", "house", "different", "country", "really",
+            "provide", "week", "hold", "large", "member", "off", "always", "next", "follow", "without", "turn", "end",
+            "local", "during", "bring", "word", "begin", "although", "example", "family", "rather", "fact", "social",
+            "write", "state", "percent", "quite", "both", "start", "run", "long", "right", "set", "help", "every",
+            "home", "month", "side", "night", "important", "eye", "head", "question", "play", "power", "money",
+            "change", "move", "interest", "order", "book", "often", "young", "national", "pay", "hear", "room",
+            "whether", "water", "form", "car", "others", "yet", "perhaps", "meet", "till", "though", "policy",
+            "include", "believe", "already", "possible", "nothing", "line", "allow", "effect", "big", "late",
+            "lead", "stand", "idea", "study", "lot", "live", "job", "since", "name", "result", "body", "happen",
+            "friend", "least", "almost", "carry", "authority", "early", "view", "himself", "public", "usually",
+            "together", "talk", "report", "face", "sit", "appear", "continue", "able", "political", "hour", "rate",
+            "law", "door", "company", "court", "fuck", "little", "because of - из", "office", "let", "war", "reason",
+            "less", "subject", "person", "term", "full", "sort", "require", "suggest", "far", "towards", "anything",
+            "period", "read", "society", "process", "mother", "offer", "voice", "once", "police", "lose", "add",
+            "probably", "expect", "ever - коогда", "price", "action", "issue", "remember", "position", "low",
+            "matter", "community", "remain", "figure", "type", "actually - вообще", "education", "fall", "speak",
+            "few", "today", "enough", "open", "bad", "buy", "minute", "moment", "girl", "age", "centre", "stop",
+            "control", "send", "health", "decide", "main", "win", "wound", "understand", "develop", "class",
+            "industry", "receive", "several", "return", "build", "spend", "force", "condition", "itself", "paper",
+            "themselves", "major", "describe", "agree", "economic", "upon", "learn", "general", "century", "therefore",
+            "father", "section", "patient", "around", "activity", "road", "table", "cow", "including", "church",
+            "reach", "real", "lie", "mind", "likely", "among", "team", "death", "soon", "act", "sense", "staff",
+            "certain", "student", "half", "language", "walk", "die", "special", "difficult", "international",
+            "department", "management", "morning", "draw", "hope", "across", "plan", "product", "city", "committee",
+            "ground", "letter", "create", "evidence", "foot", "clear", "boy", "game", "food", "role", "practice",
+            "bank", "else", "support", "sell", "event", "building", "behind", "sure", "pass", "black", "stage",
+            "meeting", "hi", "sometimes", "thus", "accept", "available", "town", "art", "further", "club", "arm",
+            "history", "parent", "land", "trade", "watch", "white", "situation", "whose", "ago", "teacher", "record",
+            "manager", "relation", "common", "system", "strong", "whole", "field", "free", "break", "yesterday",
+            "window", "account", "explain", "stay", "wait", "material", "air", "wife", "cover", "apply", "love",
+            "project", "raise", "sale", "relationship", "indeed", "please", "light", "claim", "base", "care",
+            "someone", "everything", "certainly", "rule", "cut", "grow", "similar", "story", "quality", "tax",
+            "worker", "nature", "structure", "necessary", "pound", "method", "unit", "central", "bed", "union",
+            "movement", "board", "true", "especially", "short", "personal", "detail", "model", "bear", "single",
+            "join", "reduce", "establish", "herself", "wall", "easy", "private", "computer", "former", "hospital",
+            "chapter", "scheme", "bye", "consider", "council", "development", "experience", "information", "involve",
+            "theory", "within", "choose", "wish", "property", "achieve", "financial", "poor", "blow", "charge",
+            "director", "drive", "approach", "chance", "application", "seek", "cool", "foreign", "along", "top",
+            "amount", "son", "operation", "fail", "human", "opportunity", "simple", "leader", "level", "production",
+            "value", "firm", "picture", "source", "security", "serve", "according", "business", "decision", "contract",
+            "wide", "agreement", "kill", "site", "either", "various", "screw", "test", "eat", "close", "represent",
+            "colour", "shop", "benefit", "animal", "heart", "election", "purpose", "due", "secretary", "rise", "date",
+            "hard", "music", "hair", "prepare", "anyone - кто", "pattern", "manage", "piece", "discuss", "prove",
+            "front", "evening", "royal", "tree", "population", "fine", "plant", "pressure", "response", "catch",
+            "street", "knowledge", "despite", "design", "kind", "page", "enjoy", "individual", "rest", "instead",
+            "wear", "basis", "size", "fire", "series", "success", "natural", "wrong", "near", "round", "thought",
+            "list", "argue", "final", "future", "introduce", "enter", "space", "arrive", "ensure", "statement",
+            "balcony", "attention", "principle", "pull", "doctor", "choice", "refer", "feature", "couple", "step",
+            "following", "thank", "machine", "income", "training", "present", "association", "film", "difference",
+            "fucking", "region", "effort", "player", "everyone", "village", "organisation", "whatever", "news",
+            "nice", "modern", "cell", "current", "legal", "energy", "finally", "degree", "mile", "means", "whom",
+            "treatment", "sound", "above", "task", "red", "happy", "behaviour", "identify", "resource", "defence",
+            "garden", "floor", "technology", "style", "feeling", "science", "relate", "doubt", "ok", "produce",
+            "horse", "answer", "compare", "suffer", "forward", "announce", "user", "character", "risk", "normal",
+            "myself", "dog", "obtain", "quickly", "army", "forget", "ill", "station", "glass", "cup", "previous",
+            "husband", "recently", "publish", "serious", "anyway", "visit", "capital", "sock", "note", "season",
+            "argument", "listen", "responsibility", "significant", "deal", "prime", "economy", "finish", "duty",
+            "fight", "train", "maintain", "attempt", "leg", "save", "suddenly", "brother", "improve", "avoid",
+            "teenager", "wonder", "fun", "title", "post", "hotel", "aspect", "increase", "surname", "industrial",
+            "express", "summer", "determine", "generally", "daughter", "exist", "used to", "share", "baby", "nearly",
+            "smile", "sorry", "sea", "skill", "treat", "remove", "concern", "university", "left", "dead", "discussion",
+            "specific", "box", "outside", "total", "bit", "cost", "girlfriend", "market", "occur", "research",
+            "wonderful", "division", "throw", "officer", "procedure", "fill", "king", "assume", "image", "oil",
+            "obviously", "unless", "appropriate", "military", "proposal", "mention", "client", "sector", "direction",
+            "admit", "basic", "instance", "sign", "original", "successful", "reflect", "aware", "pardon", "measure",
+            "attitude", "yourself", "exactly", "commission", "beyond", "seat", "president", "encourage", "addition",
+            "goal", "miss", "popular", "affair", "technique", "respect", "drop", "professional", "fly", "version",
+            "maybe", "ability", "operate", "goods", "campaign", "heavy", "advice", "institution", "discover",
+            "surface", "library", "pupil", "refuse", "prevent", "tasty", "dark", "teach", "memory",
+            "culture", "blood", "majority", "insane", "variety", "depend", "bill", "competition", "ready", "access",
+            "hit", "stone", "useful", "extent", "employment", "regard", "apart", "besides", "shit", "text",
+            "parliament", "recent", "article", "object", "context", "notice", "complete", "direct", "immediately",
+            "collection", "card", "interesting", "considerable", "television", "agency", "except", "physical",
+            "check", "sun", "possibility", "species", "speaker", "second", "laugh", "weight", "responsible",
+            "document", "solution", "medical", "hot", "budget", "river", "fit", "push", "tomorrow", "requirement",
+            "cold", "opposition", "opinion", "drug", "quarter", "option", "worth", "define", "influence", "occasion",
+            "software", "highly", "exchange", "lack", "concept", "blue", "star", "radio", "arrangement", "examine",
+            "bird", "busy", "chair", "green", "band", "sex", "finger", "independent", "equipment", "north", "message",
+            "afternoon", "fear", "drink", "fully", "race", "strategy", "extra", "scene", "slightly", "kitchen",
+            "arise", "speech", "network", "tea", "peace", "failure", "employee", "ahead", "scale", "attend", "hardly",
+            "shoulder", "otherwise - по", "railway", "supply", "owner", "associate", "corner", "past", "match",
+            "sport", "beautiful", "hang", "marriage", "civil", "sentence", "crime", "ball", "marry", "wind", "truth",
+            "protect"};
+
+    public static final char[] CYRILLIC = new char[]{'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л',
+            'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я'};
 
     private static final char[] LATIN = new char[]{'a', 'b', 'c', 'd', 'e',
             'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
@@ -122,7 +217,7 @@ public class Alphabets {
 
     // According to statistics, the any letters are meeting most frequently.
     public static final char[] mostFrequentLettersRu = new char[]{'о', 'е', 'а', 'и', 'т', 'н'};
-    public static final char[] mostFrequentLettersEn = new char[]{'о', 'е', 'а', 'и', 'т', 'н'};
+    public static final char[] mostFrequentLettersEn = new char[]{'e', 't', 'a', 'o', 'i', 'n'};
 
 
 //   private static final char[][] alphabetsArray = {RUSSIAN,ENGLISH};
@@ -157,7 +252,7 @@ public class Alphabets {
         }
     }
 
-        public static char[] choiceOfAlphabet (String name){
+        public static char[] choiceOfAlphabet(String name) {
             if (name.equals("Cyrillic")) {
                 return CYRILLIC;
             } else if (name.equals("Latin")) {
@@ -168,7 +263,7 @@ public class Alphabets {
             return new char[0];
         }
 
-        public static char[] getGreatestFrequentLettersOfAlphabets (String language){
+        public static char[] getGreatestFrequentLettersOfAlphabets(String language) {
 
             if (language.equals("Cyrillic")) {
                 return mostFrequentLettersRu;
@@ -177,5 +272,15 @@ public class Alphabets {
             }
             return new char[0];
         }
+
+    public static String[] getArrayFrequentWords(String language) {
+
+        if (language.equals("Cyrillic")) {
+            return RUSTRINGS;
+        } else if (language.equals("Latin")) {
+            return ENSTRINGS;
+        }
+        return new String[0];
+    }
 
     }
