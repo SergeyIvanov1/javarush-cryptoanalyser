@@ -60,14 +60,14 @@ public class Checks {
         return false;
     }
 
-    public  static boolean autoSelectOfCorrectDecryption(String pathTo) {
+    public static boolean autoSelectOfCorrectDecryption(String pathTo) {
 
         try (FileInputStream fileInputStream = new FileInputStream(pathTo);
              BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream))) {
 
             int symbol;
             int count = 0;
-            String wordFromFile = null;
+            String wordFromFile;
             String secondWordFromFile = null;
             StringBuilder stringBuilder = new StringBuilder();
 
@@ -85,12 +85,10 @@ public class Checks {
 
                             count++;
 
-
                             // если count > 1, значит два разных слова из Alphabets.STRINGS
                             // совпали с содержимым pathFrom
                             if (count > 1) {
 
-                                System.out.println(wordFromFile + "\n" + secondWordFromFile + "\n" + "true");
                                 return true;
                             }
                             secondWordFromFile = wordFromFile;

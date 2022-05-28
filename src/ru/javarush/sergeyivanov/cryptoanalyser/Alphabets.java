@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Alphabets {
 
-    public static String language = "Cyrillic";
+    public static String language = "Latin";
 
     public static final String[] RUSTRINGS = {"и", "не", "на", "быть", "он",
             "что", "это", "она", "этот", "но", "они", "мы", "как", "из", "который", "то", "за", "свой", "что",
@@ -109,9 +109,9 @@ public class Alphabets {
             "проведение", "карман", "любимый", "родной", "западный", "обязательно", "слава", "кухня", "определение",
             "пользоваться", "быстрый"};
 
-    public static final String[] ENSTRINGS = {"the", "be", "of", "and",
-            "in", "to", "have", "it", "for", "that", "you", "he", "on", "with", "do", "at", "by", "not", "this",
-            "but", "from", "they", "his", "she", "or", "which", "as", "we", "say", "will", "would", "can", "if",
+    public static final String[] ENSTRINGS = {"the", "of", "and",
+            "in", "to", "have", "it", "for", "that", "you", "with", "not", "this",
+            "but", "from", "they", "his", "she", "which", "as", "we", "say", "will", "would", "can", "if",
             "their", "go", "what", "there", "all", "get", "her", "make", "who", "out", "up", "see", "know", "time",
             "take", "them", "some - несколько, какой", "could", "so", "him", "year", "into", "its", "then", "think",
             "my", "come", "than", "more", "about", "now", "last", "your", "me", "no", "other", "give", "just",
