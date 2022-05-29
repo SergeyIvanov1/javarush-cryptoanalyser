@@ -1,18 +1,52 @@
 package ru.javarush.sergeyivanov.cryptoanalyser;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
 
 public class Checks {
 
-    private static final int NUMBEROFLETTERSFROMBEGINNING = 4;
+    private static final int NUMBER_OF_LETTERS_FROM_BEGINNING = 4;
 
     private Checks() {
     }
 
-    public static void ofPath(String path) {
+    public static void ofFile(String path) {
 
-        if (path == null) {
-            throw new NullPointerException("path equals null");
+        Path filePath = null;
+        try {
+            filePath = Path.of(path);
+        } catch (InvalidPathException ex) {
+            System.err.println("path: " + path + ", cannot be converted to a Path, it is invalid");
+            System.err.println("Error details: " + ex.getMessage());
+            System.exit(2);
+        }
+    }
+
+    public static void ofDirectory(String path) {
+
+        Path filePath = null;
+        try {
+            filePath = Path.of(path);
+        } catch (InvalidPathException ex) {
+            System.err.println("path: " + path + ", cannot be converted to a Path, it is invalid");
+            System.err.println("Error details: " + ex.getMessage());
+            System.exit(2);
+        }
+
+        try {
+            if (!Files.isDirectory(filePath)) {
+
+                System.err.println("Error: " + filePath
+                        + " is not a directory. It does not exist or can't be determined, what file is a "
+                        + "directory or not");
+                System.exit(3);
+            }
+        } catch (SecurityException e) {
+            System.err.println("Invalid read access to the file: " + filePath);
+            System.err.println("Error details: " + e.getMessage());
+            System.exit(4);
         }
     }
 
@@ -42,11 +76,11 @@ public class Checks {
             String value;
             String fromStrings = Alphabets.getArrayFrequentWords(Alphabets.language)[i];
 
-            if (word.length() > NUMBEROFLETTERSFROMBEGINNING
-                    && fromStrings.length() > NUMBEROFLETTERSFROMBEGINNING) {
+            if (word.length() > NUMBER_OF_LETTERS_FROM_BEGINNING
+                    && fromStrings.length() > NUMBER_OF_LETTERS_FROM_BEGINNING) {
 
-                value = word.substring(0, NUMBEROFLETTERSFROMBEGINNING);
-                fromStrings = fromStrings.substring(0, NUMBEROFLETTERSFROMBEGINNING);
+                value = word.substring(0, NUMBER_OF_LETTERS_FROM_BEGINNING);
+                fromStrings = fromStrings.substring(0, NUMBER_OF_LETTERS_FROM_BEGINNING);
 
                 if (value.equalsIgnoreCase(fromStrings)) {
                     return true;

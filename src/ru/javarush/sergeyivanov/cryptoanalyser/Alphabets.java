@@ -4,9 +4,11 @@ import java.util.Arrays;
 
 public class Alphabets {
 
-    public static String language = "Latin";
+    public static String language = "Cyrillic";
 
-    public static final String[] RUSTRINGS = {"и", "не", "на", "быть", "он",
+    public static final char[] SYMBOLS = {'\n', ' ', '!', '"', '\'', ',', '-', '.', ':', '?'};
+
+    private static final String[] RUSTRINGS = {"и", "не", "на", "быть", "он",
             "что", "это", "она", "этот", "но", "они", "мы", "как", "из", "который", "то", "за", "свой", "что",
             "весь", "год", "от", "так", "для", "ты", "же", "все", "тот", "мочь", "вы", "человек", "такой", "его",
             "сказать", "только", "или", "ещё", "бы", "себя", "один", "как", "уже", "до", "время", "если", "сам",
@@ -109,7 +111,7 @@ public class Alphabets {
             "проведение", "карман", "любимый", "родной", "западный", "обязательно", "слава", "кухня", "определение",
             "пользоваться", "быстрый"};
 
-    public static final String[] ENSTRINGS = {"the", "of", "and",
+    private static final String[] ENSTRINGS = {"the", "of", "and",
             "in", "to", "have", "it", "for", "that", "you", "with", "not", "this",
             "but", "from", "they", "his", "she", "which", "as", "we", "say", "will", "would", "can", "if",
             "their", "go", "what", "there", "all", "get", "her", "make", "who", "out", "up", "see", "know", "time",
@@ -207,20 +209,15 @@ public class Alphabets {
             "sport", "beautiful", "hang", "marriage", "civil", "sentence", "crime", "ball", "marry", "wind", "truth",
             "protect"};
 
-    public static final char[] CYRILLIC = new char[]{'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л',
+    private static final char[] CYRILLIC = new char[]{'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л',
             'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я'};
 
     private static final char[] LATIN = new char[]{'a', 'b', 'c', 'd', 'e',
             'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
-    public static final char[] SYMBOLS = {'\n', ' ', '!', '"', '\'', ',', '-', '.', ':', '?'};
-
     // According to statistics, the any letters are meeting most frequently.
-    public static final char[] mostFrequentLettersRu = new char[]{'о', 'е', 'а', 'и', 'т', 'н'};
-    public static final char[] mostFrequentLettersEn = new char[]{'e', 't', 'a', 'o', 'i', 'n'};
-
-
-//   private static final char[][] alphabetsArray = {RUSSIAN,ENGLISH};
+    private static final char[] mostFrequentLettersRu = new char[]{'о', 'е', 'а', 'и', 'т', 'н'};
+    private static final char[] mostFrequentLettersEn = new char[]{'e', 't', 'a', 'o', 'i', 'n'};
 
     private Alphabets() {
     }
@@ -252,26 +249,26 @@ public class Alphabets {
         }
     }
 
-        public static char[] choiceOfAlphabet(String name) {
-            if (name.equals("Cyrillic")) {
-                return CYRILLIC;
-            } else if (name.equals("Latin")) {
-                return LATIN;
-            } else if (name.equals("Symbols")) {
-                return SYMBOLS;
-            }
-            return new char[0];
+    public static char[] choiceOfAlphabet(String name) {
+        if (name.equals("Cyrillic")) {
+            return CYRILLIC;
+        } else if (name.equals("Latin")) {
+            return LATIN;
+        } else if (name.equals("Symbols")) {
+            return SYMBOLS;
         }
+        return new char[0];
+    }
 
-        public static char[] getGreatestFrequentLettersOfAlphabets(String language) {
+    public static char[] getGreatestFrequentLettersOfAlphabets(String language) {
 
-            if (language.equals("Cyrillic")) {
-                return mostFrequentLettersRu;
-            } else if (language.equals("Latin")) {
-                return mostFrequentLettersEn;
-            }
-            return new char[0];
+        if (language.equals("Cyrillic")) {
+            return mostFrequentLettersRu;
+        } else if (language.equals("Latin")) {
+            return mostFrequentLettersEn;
         }
+        return new char[0];
+    }
 
     public static String[] getArrayFrequentWords(String language) {
 
@@ -283,4 +280,4 @@ public class Alphabets {
         return new String[0];
     }
 
-    }
+}
