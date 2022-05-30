@@ -175,7 +175,7 @@ public class Dialog {
                     } catch (PathProcessingException e) {
 
                         System.out.println("\nPath specified wrong.");
-                        System.err.println("Error details " + e.getMessage());
+                        System.err.println("Error details: " + e.getMessage());
                         System.exit(3);
 
                     } catch (ReadWrightFileException ex) {
@@ -258,23 +258,39 @@ public class Dialog {
     private static void requestPath(Scanner console, String selectFunction) {
         System.out.println("Введите адрес файла в формате .txt, в котором находится текст для " + selectFunction);
         pathFrom = console.nextLine();
+        if (pathFrom.isEmpty()) {
+            throw new PathProcessingException("String is empty");
+        }
         Checks.whetherPathIsFile(pathFrom);
 
         System.out.println("Введите адрес файла в формате .txt, "
                 + "в который необходимо сохранить текст после " + selectFunction);
+
         pathTo = console.nextLine();
+        if (pathTo.isEmpty()) {
+            throw new PathProcessingException("String is empty");
+        }
+
         Checks.whetherPathIsFile(pathTo);
     }
 
     private static void requestFileAddress(Scanner console) {
         System.out.println("Введите адрес файла в формате .txt, в котором находится текст для расшифровки");
         pathFrom = console.nextLine();
+        if (pathFrom.isEmpty()) {
+            throw new PathProcessingException("String is empty");
+        }
+
         Checks.whetherPathIsFile(pathFrom);
     }
 
     private static void requestDirectoryAddress(Scanner console) {
         System.out.println("Введите адрес папки, в которую необходимо сохранить результат расшифровки");
         pathTo = console.nextLine();
+        if (pathTo.isEmpty()) {
+            throw new PathProcessingException("String is empty");
+        }
+
         Checks.whetherPathIsDirectory(pathTo);
     }
 

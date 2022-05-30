@@ -19,8 +19,7 @@ public class Checks {
             filePath = Path.of(path);
         } catch (InvalidPathException ex) {
 
-            String message = "path: " + path + ", cannot be converted to a Path, it is invalid\n"
-                    + "Error details: " + ex.getMessage();
+            String message = "path: " + path + ", cannot be converted to a Path, it is invalid\n";
             throw new PathProcessingException(message, ex);
         }
     }
@@ -33,19 +32,14 @@ public class Checks {
 
         } catch (InvalidPathException ex) {
 
-            String message = "path: " + path + ", cannot be converted to a Path, it is invalid\n"
-                    + "Error details: " + ex.getMessage();
+            String message = "path: " + path + ", cannot be converted to a Path, it is invalid\n";
             throw new PathProcessingException(message, ex);
         }
 
-        try {
-            Files.isDirectory(filePath);
+        if (!Files.isDirectory(filePath)) {
 
-        } catch (SecurityException e) {
-
-            String message = "Invalid read access to the file: " + filePath
-                    + "\nError details: " + e.getMessage();
-            throw new PathProcessingException(message, e);
+            String message = "Invalid read access to the file: " + filePath;
+            throw new PathProcessingException(message);
         }
     }
 
@@ -56,8 +50,8 @@ public class Checks {
 
             if ((valueKey % TextProcessing.choiceOfAlphabet(alphabetName).length) == 0) {
 
-                String message = "Ключ не должен равняться 0 или длинне алфавита ("
-                        + TextProcessing.choiceOfAlphabet(alphabetName).length + "), т.к. текст не изменится";
+                String message = "The key does not equals 0 or length of alphabet ("
+                        + TextProcessing.choiceOfAlphabet(alphabetName).length + "), text will not change";
                 throw new KeyInvalidException(message);
             }
         } catch (NumberFormatException e) {
@@ -131,19 +125,17 @@ public class Checks {
 
         } catch (FileNotFoundException e) {
 
-            String message = "File: " + pathTo + " not found exception"
-                    + "Error details: " + e.getMessage();
+            String message = "File: \"" + pathTo + "\" not found";
             throw new PathProcessingException(message, e);
 
         } catch (SecurityException e) {
 
-            String message = "Invalid read access to the file: " + pathTo
-                    + "\nError details: " + e.getMessage();
+            String message = "Invalid read access to the file: \"" + pathTo + "\"";
             throw new PathProcessingException(message, e);
 
         } catch (IOException e) {
 
-            String message = "An Output error occurs with file " + pathTo;
+            String message = "An Output error occurs with file \"" + pathTo + "\"";
             throw new ReadWrightFileException(message, e);
         }
         return false;

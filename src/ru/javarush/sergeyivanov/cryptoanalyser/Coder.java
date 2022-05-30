@@ -59,37 +59,33 @@ public class Coder {
 
             } catch (FileNotFoundException e) {
 
-                String message = "File: " + pathTo + " not found exception"
-                        + "Error details: " + e.getMessage();
+                String message = "File: \"" + pathTo + "\" not found exception";
                 throw new PathProcessingException(message, e);
 
             } catch (SecurityException e) {
 
-                String message = "Invalid read access to the file: " + pathTo
-                        + "\nError details: " + e.getMessage();
+                String message = "Invalid read access to the file: \"" + pathTo + "\"";
                 throw new PathProcessingException(message, e);
 
             } catch (IOException e) {
 
-                String message = "An Input error occurs with file " + pathTo;
+                String message = "An Input error occurs with file \"" + pathTo + "\"";
                 throw new ReadWrightFileException(message, e);
             }
 
         } catch (FileNotFoundException e) {
 
-            String message = "File: " + pathFrom + " not found exception"
-                    + "Error details: " + e.getMessage();
+            String message = "File: \"" + pathFrom + "\" not found";
             throw new PathProcessingException(message, e);
 
         } catch (SecurityException e) {
 
-            String message = "Invalid read access to the file: " + pathFrom
-                    + "\nError details: " + e.getMessage();
+            String message = "Invalid read access to the file: \"" + pathFrom + "\"";
             throw new PathProcessingException(message, e);
 
         } catch (IOException e) {
 
-            String message = "An Output error occurs with file " + pathFrom;
+            String message = "An Output error occurs with file \"" + pathFrom + "\"";
             throw new ReadWrightFileException(message, e);
         }
     }
