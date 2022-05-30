@@ -12,69 +12,71 @@ public class Checks {
     private Checks() {
     }
 
-    public static void ofFile(String path) {
+    public static void whetherPathIsFile(String path) {
 
         Path filePath = null;
         try {
             filePath = Path.of(path);
         } catch (InvalidPathException ex) {
-            System.err.println("path: " + path + ", cannot be converted to a Path, it is invalid");
-            System.err.println("Error details: " + ex.getMessage());
-            System.exit(2);
+
+            String message = "path: " + path + ", cannot be converted to a Path, it is invalid\n"
+                    + "Error details: " + ex.getMessage();
+            throw new PathProcessingException(message, ex);
         }
     }
 
-    public static void ofDirectory(String path) {
+    public static void whetherPathIsDirectory(String path) {
 
         Path filePath = null;
         try {
             filePath = Path.of(path);
+
         } catch (InvalidPathException ex) {
-            System.err.println("path: " + path + ", cannot be converted to a Path, it is invalid");
-            System.err.println("Error details: " + ex.getMessage());
-            System.exit(2);
+
+            String message = "path: " + path + ", cannot be converted to a Path, it is invalid\n"
+                    + "Error details: " + ex.getMessage();
+            throw new PathProcessingException(message, ex);
         }
 
         try {
-            if (!Files.isDirectory(filePath)) {
+            Files.isDirectory(filePath);
 
-                System.err.println("Error: " + filePath
-                        + " is not a directory. It does not exist or can't be determined, what file is a "
-                        + "directory or not");
-                System.exit(3);
-            }
+//                System.err.println("Error: " + filePath
+//                        + " is not a directory. It does not exist or can't be determined, what file is a "
+//                        + "directory or not");
+//                System.exit(3);
+
         } catch (SecurityException e) {
-            System.err.println("Invalid read access to the file: " + filePath);
-            System.err.println("Error details: " + e.getMessage());
-            System.exit(4);
+
+            String message = "Invalid read access to the file: " + filePath
+                    + "\nError details: " + e.getMessage();
+            throw new PathProcessingException(message, e);
         }
     }
 
-    public static boolean notKey(String key, String alphabetName) {
-
-        boolean marker = false;
+    public static void notKey(String key, String alphabetName) {
 
         try {
             int valueKey = Integer.parseInt(key);
 
-            if ((valueKey % Alphabets.choiceOfAlphabet(alphabetName).length) == 0) {
+            if ((valueKey % TextProcessing.choiceOfAlphabet(alphabetName).length) == 0) {
 
-                System.out.println("Ключ не должен равняться 0 или "
-                        + Alphabets.choiceOfAlphabet(alphabetName).length + ", т.к. текст не изменится");
-                marker = true;
+                String message = "Ключ не должен равняться 0 или длинне алфавита ("
+                        + TextProcessing.choiceOfAlphabet(alphabetName).length + "), т.к. текст не изменится";
+                throw new KeyInvalidException(message);
             }
         } catch (NumberFormatException e) {
-            System.out.println("Введите цифру");
-            marker = true;
+            String message = "The string \"" + key + "\" does not contain a parsable integer"
+                    + "\nError details: " + e.getMessage();
+            throw new KeyInvalidException(message, e);
         }
-        return marker;
     }
 
     public static boolean isCorrespondFrequentWords(String word) {
 
-        for (int i = 0; i < Alphabets.getArrayFrequentWords(Alphabets.language).length; i++) {
+        for (int i = 0; i < TextProcessing.getArrayFrequentWords(TextProcessing.language).length; i++) {
             String value;
-            String fromStrings = Alphabets.getArrayFrequentWords(Alphabets.language)[i];
+            String fromStrings = TextProcessing.getArrayFrequentWords(TextProcessing.language)[i];
 
             if (word.length() > NUMBER_OF_LETTERS_FROM_BEGINNING
                     && fromStrings.length() > NUMBER_OF_LETTERS_FROM_BEGINNING) {
@@ -109,7 +111,7 @@ public class Checks {
 
                 if (Character.isLetter(symbol) || Character.isWhitespace(symbol)) {
 
-                    if (Character.isWhitespace(symbol) || Alphabets.isSymbol((char) symbol)) {
+                    if (Character.isWhitespace(symbol) || TextProcessing.isSymbol((char) symbol)) {
 
                         wordFromFile = stringBuilder.toString();
                         stringBuilder.delete(0, wordFromFile.length());

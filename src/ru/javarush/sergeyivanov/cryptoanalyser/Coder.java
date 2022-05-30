@@ -24,16 +24,16 @@ public class Coder {
                         unencryptedChar = (char) Character.toLowerCase(unencryptedChar);
                     }
 
-                    int index = Alphabets.getIndex((char) unencryptedChar, Alphabets.language);
+                    int index = TextProcessing.getIndex((char) unencryptedChar, TextProcessing.language);
                     if (index >= 0) {
 
-                        int secretCharInd = (index + key) % Alphabets.choiceOfAlphabet(Alphabets.language).length;
+                        int secretCharInd = (index + key) % TextProcessing.choiceOfAlphabet(TextProcessing.language).length;
                         if (secretCharInd < 0) {
-                            secretCharInd = Alphabets.choiceOfAlphabet(Alphabets.language).length
+                            secretCharInd = TextProcessing.choiceOfAlphabet(TextProcessing.language).length
                                     - Math.abs(secretCharInd);
                         }
 
-                        wantedChar = Alphabets.choiceOfAlphabet(Alphabets.language)[secretCharInd];
+                        wantedChar = TextProcessing.choiceOfAlphabet(TextProcessing.language)[secretCharInd];
 
                         if (flagUpperCase) {
                             bufferedWriter.append(Character.toUpperCase(wantedChar));
@@ -44,10 +44,10 @@ public class Coder {
 
                 } else {
 
-                    for (int j = 0; j < Alphabets.SYMBOLS.length; j++) {
-                        if (unencryptedChar == Alphabets.SYMBOLS[j]) {
+                    for (int j = 0; j < TextProcessing.SYMBOLS.length; j++) {
+                        if (unencryptedChar == TextProcessing.SYMBOLS[j]) {
 
-                            wantedChar = Alphabets.SYMBOLS[j];
+                            wantedChar = TextProcessing.SYMBOLS[j];
                             bufferedWriter.append(wantedChar);
                         }
                     }

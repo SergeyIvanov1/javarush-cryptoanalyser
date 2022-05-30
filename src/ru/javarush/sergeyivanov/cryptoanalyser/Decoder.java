@@ -12,7 +12,7 @@ public class Decoder {
 
     public static void manualDecryptionBruteForce(String pathFrom, String pathTo) {
 
-        for (int key = 1; key < Alphabets.choiceOfAlphabet(Alphabets.language).length; key++) {
+        for (int key = 1; key < TextProcessing.choiceOfAlphabet(TextProcessing.language).length; key++) {
 
             String pathKey = getNewFileNameBF(pathTo, key);
             Coder.encryption(pathFrom, pathKey, key);
@@ -21,7 +21,7 @@ public class Decoder {
 
     public static void autoDecryptionBruteForce(String pathFrom, String pathTo) {
 
-        for (int key = 1; key < Alphabets.choiceOfAlphabet(Alphabets.language).length; key++) {
+        for (int key = 1; key < TextProcessing.choiceOfAlphabet(TextProcessing.language).length; key++) {
 
             Coder.encryption(pathFrom, pathTo, key);
 
@@ -33,14 +33,14 @@ public class Decoder {
 
     public static void manualDecryptionWithStatistic(String pathFrom, String pathTo) {
 
-        char[] chars = Alphabets.getArrayGreatestFrequentLettersOfAlphabets(Alphabets.language);
-        int indexOfMostFrequentLetterOfText = Alphabets.getIndex(Alphabets.getMostFrequentLetterOfText(pathFrom),
-                Alphabets.language);
+        char[] chars = TextProcessing.getArrayGreatestFrequentLettersOfAlphabets(TextProcessing.language);
+        int indexOfMostFrequentLetterOfText = TextProcessing.getIndex(TextProcessing.getMostFrequentLetterOfText(pathFrom),
+                TextProcessing.language);
 
         for (int ind = 0; ind < chars.length; ind++) {
 
             int foundKey = indexOfMostFrequentLetterOfText
-                    - Alphabets.getIndex(chars[ind], Alphabets.language);
+                    - TextProcessing.getIndex(chars[ind], TextProcessing.language);
 
             String pathKey = getNewFileNameSA(pathTo, foundKey);
 
@@ -50,14 +50,14 @@ public class Decoder {
 
     public static void autoDecryptionWithStatistic(String pathFrom, String pathTo) {
 
-        char[] chars = Alphabets.getArrayGreatestFrequentLettersOfAlphabets(Alphabets.language);
-        int indexOfMostFrequentLetterOfText = Alphabets.getIndex(Alphabets.getMostFrequentLetterOfText(pathFrom),
-                Alphabets.language);
+        char[] chars = TextProcessing.getArrayGreatestFrequentLettersOfAlphabets(TextProcessing.language);
+        int indexOfMostFrequentLetterOfText = TextProcessing.getIndex(
+                TextProcessing.getMostFrequentLetterOfText(pathFrom), TextProcessing.language);
 
         for (int ind = 0; ind < chars.length; ind++) {
 
             int foundKey = indexOfMostFrequentLetterOfText
-                    - Alphabets.getIndex(chars[ind], Alphabets.language);
+                    - TextProcessing.getIndex(chars[ind], TextProcessing.language);
 
             decryptionWithKey(pathFrom, pathTo, foundKey);
 

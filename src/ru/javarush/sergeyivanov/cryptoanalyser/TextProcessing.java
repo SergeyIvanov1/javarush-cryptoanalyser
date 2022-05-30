@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Alphabets {
+public class TextProcessing {
 
     public static String language = "Cyrillic";
 
@@ -223,7 +223,7 @@ public class Alphabets {
     private static final char[] mostFrequentLettersRu = new char[]{'о', 'е', 'а', 'и', 'т', 'н'};
     private static final char[] mostFrequentLettersEn = new char[]{'e', 't', 'a', 'o', 'i', 'n'};
 
-    private Alphabets() {
+    private TextProcessing() {
     }
 
     public static int getIndex(char letter, String language) {
@@ -296,7 +296,7 @@ public class Alphabets {
 
                 char wantedChar = Character.toLowerCase((char) value);
 
-                if (Character.isLetter(wantedChar) && (Alphabets.getIndex(wantedChar, Alphabets.language) >= 0)) {
+                if (Character.isLetter(wantedChar) && (TextProcessing.getIndex(wantedChar, TextProcessing.language) >= 0)) {
 
                     if (mapa.containsKey(wantedChar)) {
                         mapa.put(wantedChar, mapa.get(wantedChar) + 1);
