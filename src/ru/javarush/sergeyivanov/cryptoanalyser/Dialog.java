@@ -23,19 +23,19 @@ public class Dialog {
         System.out.println("Выберите язык текста для шифрования/расшифрования:" +
                 " английский или русский (введите \"en\" или \"ru\")");
 
-//        while (true) {
-//            String answer = console.nextLine();
-//
-//            if (answer.equalsIgnoreCase("en")) {
-//                TextProcessing.language = "Latin";
-//                break;
-//            } else if (answer.equalsIgnoreCase("ru")) {
-//                TextProcessing.language = "Cyrillic";
-//                break;
-//            } else {
-//                System.out.println("введите \"en\" или \"ru\"");
-//            }
-//        }
+        while (true) {
+            String answer = console.nextLine();
+
+            if (answer.equalsIgnoreCase("en")) {
+                TextProcessing.language = "Latin";
+                break;
+            } else if (answer.equalsIgnoreCase("ru")) {
+                TextProcessing.language = "Cyrillic";
+                break;
+            } else {
+                System.out.println("введите \"en\" или \"ru\"");
+            }
+        }
 
         System.out.println("\nВыберите пункт меню:\n"
                 + "1 - Зашифровать текст\n"

@@ -26,7 +26,7 @@ public class Checks {
 
     public static void whetherPathIsDirectory(String path) {
 
-        Path filePath = null;
+        Path filePath;
         try {
             filePath = Path.of(path);
 
