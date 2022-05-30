@@ -1,6 +1,10 @@
 package ru.javarush.sergeyivanov.cryptoanalyser;
 
+import java.io.*;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class Alphabets {
 
@@ -260,7 +264,7 @@ public class Alphabets {
         return new char[0];
     }
 
-    public static char[] getGreatestFrequentLettersOfAlphabets(String language) {
+    public static char[] getArrayGreatestFrequentLettersOfAlphabets(String language) {
 
         if (language.equals("Cyrillic")) {
             return mostFrequentLettersRu;
@@ -280,4 +284,51 @@ public class Alphabets {
         return new String[0];
     }
 
+    public static char getMostFrequentLetterOfText(String pathFrom) {
+
+        try (FileInputStream fileInputStream = new FileInputStream(pathFrom);
+             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream))) {
+
+            HashMap<Character, Integer> mapa = new HashMap<>();
+
+            int value;
+            while ((value = bufferedReader.read()) != -1) {
+
+                char wantedChar = Character.toLowerCase((char) value);
+
+                if (Character.isLetter(wantedChar) && (Alphabets.getIndex(wantedChar, Alphabets.language) >= 0)) {
+
+                    if (mapa.containsKey(wantedChar)) {
+                        mapa.put(wantedChar, mapa.get(wantedChar) + 1);
+                    } else {
+                        mapa.put(wantedChar, 1);
+                    }
+                }
+            }
+
+            char maxRepetitions = 0;
+            int max = 0;
+
+            Set<Map.Entry<Character, Integer>> entries = mapa.entrySet();
+            for (Map.Entry<Character, Integer> pair : entries) {
+
+                char character = pair.getKey();
+                int amount = pair.getValue();
+
+                if (amount > max) {
+
+                    maxRepetitions = character;
+                    max = amount;
+                }
+            }
+
+            return maxRepetitions;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
