@@ -296,7 +296,8 @@ public class TextProcessing {
 
                 char wantedChar = Character.toLowerCase((char) value);
 
-                if (Character.isLetter(wantedChar) && (TextProcessing.getIndex(wantedChar, TextProcessing.language) >= 0)) {
+                if (Character.isLetter(wantedChar)
+                        && (TextProcessing.getIndex(wantedChar, TextProcessing.language) >= 0)) {
 
                     if (mapa.containsKey(wantedChar)) {
                         mapa.put(wantedChar, mapa.get(wantedChar) + 1);
@@ -325,10 +326,23 @@ public class TextProcessing {
             return maxRepetitions;
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+
+            String message = "File: " + pathFrom + " not found exception"
+                    + "Error details: " + e.getMessage();
+            throw new PathProcessingException(message, e);
+
+        } catch (SecurityException e) {
+
+            String message = "Invalid read access to the file: " + pathFrom
+                    + "\nError details: " + e.getMessage();
+            throw new PathProcessingException(message, e);
+
         } catch (IOException e) {
-            e.printStackTrace();
+
+            String message = "An Output error occurs with file " + pathFrom;
+            throw new ReadWrightFileException(message, e);
         }
-        return 0;
+
+//        return 0;
     }
 }

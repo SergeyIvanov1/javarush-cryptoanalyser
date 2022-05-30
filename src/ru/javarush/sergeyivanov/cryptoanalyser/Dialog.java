@@ -12,9 +12,10 @@ public class Dialog {
     private static final String QUERY_OF_CONTINUATION = "Функция завершена. "
             + "Для продолжения программы выберите пункт меню и напишите его номер, а для выхода \"exit\"";
 
-    private Dialog() {}
+    private Dialog() {
+    }
 
-    public static void start(){
+    public static void start() {
         Scanner console = new Scanner(System.in);
 
         System.out.println("Программа криптоанализатор.\n");
@@ -48,54 +49,202 @@ public class Dialog {
         while (!(choice = console.nextLine()).equalsIgnoreCase("exit")) {
             switch (choice) {
                 case "1":
-                    Dialog.requestPath(console, SELECTED_FUNCTION_ENCODE);
-                    Dialog.requestKey(console);
+                    try {
 
-                    Coder.encryption(pathFrom, pathTo, Integer.parseInt(key));
+                        Dialog.requestPath(console, SELECTED_FUNCTION_ENCODE);
+                    } catch (PathProcessingException ex) {
+
+                        System.out.println("Path specified wrong.");
+                        System.err.println("Error details: " + ex.getMessage());
+                        System.exit(1);
+                    }
+
+                    try {
+
+                        Dialog.requestKey(console);
+                    } catch (KeyInvalidException e) {
+
+                        System.out.println("Wrong key: " + key);
+                        System.err.println("Error details: " + e.getMessage());
+                        System.exit(2);
+                    }
+
+                    try {
+                        Coder.encryption(pathFrom, pathTo, Integer.parseInt(key));
+                    } catch (PathProcessingException e) {
+
+                        System.out.println("Path specified wrong.");
+                        System.err.println("Error details " + e.getMessage());
+                        System.exit(3);
+
+                    } catch (ReadWrightFileException ex) {
+
+                        System.out.println("Error reading/writing file");
+                        System.err.println("Error details: " + ex.getMessage());
+                        System.exit(4);
+                    }
 
                     System.out.println(QUERY_OF_CONTINUATION);
                     break;
 
                 case "2":
-                    Dialog.requestPath(console, SELECTED_FUNCTION_DECODE);
-                    Dialog.requestKey(console);
+                    try {
 
+                        Dialog.requestPath(console, SELECTED_FUNCTION_DECODE);
+                    } catch (PathProcessingException ex) {
 
-                    Decoder.decryptionWithKey(pathFrom, pathTo, Integer.parseInt(key));
+                        System.out.println("Path specified wrong.");
+                        System.err.println("Error details: " + ex.getMessage());
+                        System.exit(1);
+                    }
+
+                    try {
+
+                        Dialog.requestKey(console);
+                    } catch (KeyInvalidException e) {
+
+                        System.out.println("Wrong key: " + key);
+                        System.err.println("Error details: " + e.getMessage());
+                        System.exit(2);
+                    }
+
+                    try {
+                        Decoder.decryptionWithKey(pathFrom, pathTo, Integer.parseInt(key));
+                    } catch (PathProcessingException e) {
+
+                        System.out.println("Path specified wrong.");
+                        System.err.println("Error details " + e.getMessage());
+                        System.exit(3);
+
+                    } catch (ReadWrightFileException ex) {
+
+                        System.out.println("Error reading/writing file");
+                        System.err.println("Error details: " + ex.getMessage());
+                        System.exit(4);
+                    }
 
                     System.out.println(QUERY_OF_CONTINUATION);
                     break;
 
                 case "3":
-                    Dialog.requestFileAddress(console);
-                    Dialog.requestDirectoryAddress(console);
 
-                    Decoder.manualDecryptionBruteForce(pathFrom, pathTo);
+                    try {
+
+                        Dialog.requestFileAddress(console);
+                        Dialog.requestDirectoryAddress(console);
+                    } catch (PathProcessingException ex) {
+
+                        System.out.println("Path specified wrong.");
+                        System.err.println("Error details: " + ex.getMessage());
+                        System.exit(1);
+                    }
+
+                    try {
+                        Decoder.manualDecryptionBruteForce(pathFrom, pathTo);
+                    } catch (PathProcessingException e) {
+
+                        System.out.println("Path specified wrong.");
+                        System.err.println("Error details " + e.getMessage());
+                        System.exit(3);
+
+                    } catch (ReadWrightFileException ex) {
+
+                        System.out.println("Error reading/writing file");
+                        System.err.println("Error details: " + ex.getMessage());
+                        System.exit(4);
+                    }
 
                     System.out.println(QUERY_OF_CONTINUATION);
                     break;
 
                 case "4":
-                    Dialog.requestPath(console, SELECTED_FUNCTION_DECODE);
 
-                    Decoder.autoDecryptionBruteForce(pathFrom, pathTo);
+                    try {
+
+                        Dialog.requestPath(console, SELECTED_FUNCTION_DECODE);
+                    } catch (PathProcessingException ex) {
+
+                        System.out.println("Path specified wrong.");
+                        System.err.println("Error details: " + ex.getMessage());
+                        System.exit(1);
+                    }
+
+                    try {
+
+                        Decoder.autoDecryptionBruteForce(pathFrom, pathTo);
+                    } catch (PathProcessingException e) {
+
+                        System.out.println("Path specified wrong.");
+                        System.err.println("Error details " + e.getMessage());
+                        System.exit(3);
+
+                    } catch (ReadWrightFileException ex) {
+
+                        System.out.println("Error reading/writing file");
+                        System.err.println("Error details: " + ex.getMessage());
+                        System.exit(4);
+                    }
 
                     System.out.println(QUERY_OF_CONTINUATION);
                     break;
 
                 case "5":
-                    Dialog.requestFileAddress(console);
-                    Dialog.requestDirectoryAddress(console);
 
-                    Decoder.manualDecryptionWithStatistic(pathFrom, pathTo);
+                    try {
+
+                        Dialog.requestFileAddress(console);
+                        Dialog.requestDirectoryAddress(console);
+                    } catch (PathProcessingException ex) {
+
+                        System.out.println("Path specified wrong.");
+                        System.err.println("Error details: " + ex.getMessage());
+                        System.exit(1);
+                    }
+
+                    try {
+                        Decoder.manualDecryptionWithStatistic(pathFrom, pathTo);
+                    } catch (PathProcessingException e) {
+
+                        System.out.println("Path specified wrong.");
+                        System.err.println("Error details " + e.getMessage());
+                        System.exit(3);
+
+                    } catch (ReadWrightFileException ex) {
+
+                        System.out.println("Error reading/writing file");
+                        System.err.println("Error details: " + ex.getMessage());
+                        System.exit(4);
+                    }
 
                     System.out.println(QUERY_OF_CONTINUATION);
                     break;
 
                 case "6":
-                    Dialog.requestPath(console, SELECTED_FUNCTION_DECODE);
 
-                    Decoder.autoDecryptionWithStatistic(pathFrom, pathTo);
+                    try {
+
+                        Dialog.requestPath(console, SELECTED_FUNCTION_DECODE);
+                    } catch (PathProcessingException ex) {
+
+                        System.out.println("Path specified wrong.");
+                        System.err.println("Error details: " + ex.getMessage());
+                        System.exit(1);
+                    }
+
+                    try {
+                        Decoder.autoDecryptionWithStatistic(pathFrom, pathTo);
+                    } catch (PathProcessingException e) {
+
+                        System.out.println("Path specified wrong.");
+                        System.err.println("Error details " + e.getMessage());
+                        System.exit(3);
+
+                    } catch (ReadWrightFileException ex) {
+
+                        System.out.println("Error reading/writing file");
+                        System.err.println("Error details: " + ex.getMessage());
+                        System.exit(4);
+                    }
 
                     System.out.println(QUERY_OF_CONTINUATION);
                     break;
@@ -129,7 +278,7 @@ public class Dialog {
         Checks.whetherPathIsDirectory(pathTo);
     }
 
-    private static void requestKey(Scanner console){
+    private static void requestKey(Scanner console) {
         System.out.println("Введите ключ");
         key = console.nextLine();
         Checks.notKey(key, TextProcessing.language);

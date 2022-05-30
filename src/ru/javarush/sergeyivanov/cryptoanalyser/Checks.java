@@ -41,11 +41,6 @@ public class Checks {
         try {
             Files.isDirectory(filePath);
 
-//                System.err.println("Error: " + filePath
-//                        + " is not a directory. It does not exist or can't be determined, what file is a "
-//                        + "directory or not");
-//                System.exit(3);
-
         } catch (SecurityException e) {
 
             String message = "Invalid read access to the file: " + filePath
@@ -136,9 +131,21 @@ public class Checks {
             }
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+
+            String message = "File: " + pathTo + " not found exception"
+                    + "Error details: " + e.getMessage();
+            throw new PathProcessingException(message, e);
+
+        } catch (SecurityException e) {
+
+            String message = "Invalid read access to the file: " + pathTo
+                    + "\nError details: " + e.getMessage();
+            throw new PathProcessingException(message, e);
+
         } catch (IOException e) {
-            e.printStackTrace();
+
+            String message = "An Output error occurs with file " + pathTo;
+            throw new ReadWrightFileException(message, e);
         }
         return false;
     }

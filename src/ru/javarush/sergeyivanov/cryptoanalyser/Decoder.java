@@ -14,7 +14,7 @@ public class Decoder {
 
         for (int key = 1; key < TextProcessing.choiceOfAlphabet(TextProcessing.language).length; key++) {
 
-            String pathKey = getNewFileNameBF(pathTo, key);
+            String pathKey = getNewFileNameBF(key);
             Coder.encryption(pathFrom, pathKey, key);
         }
     }
@@ -42,7 +42,7 @@ public class Decoder {
             int foundKey = indexOfMostFrequentLetterOfText
                     - TextProcessing.getIndex(chars[ind], TextProcessing.language);
 
-            String pathKey = getNewFileNameSA(pathTo, foundKey);
+            String pathKey = getNewFileNameSA(foundKey);
 
             decryptionWithKey(pathFrom, pathKey, foundKey);
         }
@@ -67,14 +67,12 @@ public class Decoder {
         }
     }
 
-    public static String getNewFileNameBF(String pathTo, int key) {
-        int indexOfDot = pathTo.lastIndexOf(".");
-        return pathTo.substring(0, indexOfDot) + "bruteForce" + key + pathTo.substring(indexOfDot);
+    public static String getNewFileNameBF(int key) {
+        return "BruteForce_key" + key + ".txt";
     }
 
-    public static String getNewFileNameSA(String pathTo, int key) {
-        int indexOfDot = pathTo.lastIndexOf(".");
-        return pathTo.substring(0, indexOfDot) + "statisticAnalise" + key + pathTo.substring(indexOfDot);
+    public static String getNewFileNameSA(int key) {
+        return "StatisticAnalise_key" + key + ".txt";
     }
 
 }
