@@ -1,1 +1,3 @@
- сверяет соответствие со вторым символом шаблона. В нашем случае это символ ., который обозначает любой символ.
+The program had six modes of using. 
+- "Encryption". Text from first indicated file is encoding
+to second file. 

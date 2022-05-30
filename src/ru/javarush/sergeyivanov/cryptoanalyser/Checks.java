@@ -61,8 +61,7 @@ public class Checks {
                 throw new KeyInvalidException(message);
             }
         } catch (NumberFormatException e) {
-            String message = "The string \"" + key + "\" does not contain a parsable integer"
-                    + "\nError details: " + e.getMessage();
+            String message = "The string \"" + key + "\" does not contain a parsable Integer";
             throw new KeyInvalidException(message, e);
         }
     }
