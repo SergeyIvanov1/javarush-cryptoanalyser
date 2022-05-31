@@ -1,4 +1,8 @@
-package ru.javarush.sergeyivanov.cryptoanalyser;
+package ru.javarush.sergeyivanov.cryptoanalyser.TextProcessing;
+
+import ru.javarush.sergeyivanov.cryptoanalyser.Exceptions.KeyInvalidException;
+import ru.javarush.sergeyivanov.cryptoanalyser.Exceptions.PathProcessingException;
+import ru.javarush.sergeyivanov.cryptoanalyser.Exceptions.ReadWrightFileException;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -8,6 +12,7 @@ import java.nio.file.Path;
 public class Checks {
 
     private static final int NUMBER_OF_LETTERS_FROM_BEGINNING = 4;
+    private static final String PATH_IS_INVALID = "path: \"%s\", cannot be converted to a Path, it is invalid\n";
 
     private Checks() {
     }
@@ -19,7 +24,7 @@ public class Checks {
             filePath = Path.of(path);
         } catch (InvalidPathException ex) {
 
-            String message = "path: " + path + ", cannot be converted to a Path, it is invalid\n";
+            String message = String.format(PATH_IS_INVALID, path);
             throw new PathProcessingException(message, ex);
         }
     }
@@ -32,13 +37,13 @@ public class Checks {
 
         } catch (InvalidPathException ex) {
 
-            String message = "path: " + path + ", cannot be converted to a Path, it is invalid\n";
+            String message = String.format(PATH_IS_INVALID, path);
             throw new PathProcessingException(message, ex);
         }
 
         if (!Files.isDirectory(filePath)) {
 
-            String message = "Invalid read access to the file: " + filePath;
+            String message = "This path is not directory " + filePath;
             throw new PathProcessingException(message);
         }
     }

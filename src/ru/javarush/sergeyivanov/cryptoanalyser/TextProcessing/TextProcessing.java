@@ -1,4 +1,7 @@
-package ru.javarush.sergeyivanov.cryptoanalyser;
+package ru.javarush.sergeyivanov.cryptoanalyser.TextProcessing;
+
+import ru.javarush.sergeyivanov.cryptoanalyser.Exceptions.PathProcessingException;
+import ru.javarush.sergeyivanov.cryptoanalyser.Exceptions.ReadWrightFileException;
 
 import java.io.*;
 import java.util.Arrays;
@@ -327,14 +330,14 @@ public class TextProcessing {
 
         } catch (FileNotFoundException e) {
 
-            String message = "File: " + pathFrom + " not found exception"
-                    + "Error details: " + e.getMessage();
+            String message = "File: \"" + pathFrom + "\" not found\n"
+                    + e.getMessage();
             throw new PathProcessingException(message, e);
 
         } catch (SecurityException e) {
 
-            String message = "Invalid read access to the file: " + pathFrom
-                    + "\nError details: " + e.getMessage();
+            String message = "Invalid read access to the file: \"" + pathFrom
+                    + "\"\nError details: " + e.getMessage();
             throw new PathProcessingException(message, e);
 
         } catch (IOException e) {

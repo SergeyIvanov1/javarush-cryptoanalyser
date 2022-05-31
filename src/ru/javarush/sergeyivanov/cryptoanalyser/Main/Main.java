@@ -1,4 +1,4 @@
-package ru.javarush.sergeyivanov.cryptoanalyser;
+package ru.javarush.sergeyivanov.cryptoanalyser.Main;
 
 public class Main {
 

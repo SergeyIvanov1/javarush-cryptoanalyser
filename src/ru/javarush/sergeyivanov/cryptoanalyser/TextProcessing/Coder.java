@@ -1,8 +1,15 @@
-package ru.javarush.sergeyivanov.cryptoanalyser;
+package ru.javarush.sergeyivanov.cryptoanalyser.TextProcessing;
+
+import ru.javarush.sergeyivanov.cryptoanalyser.Exceptions.PathProcessingException;
+import ru.javarush.sergeyivanov.cryptoanalyser.Exceptions.ReadWrightFileException;
+import ru.javarush.sergeyivanov.cryptoanalyser.TextProcessing.TextProcessing;
 
 import java.io.*;
 
 public class Coder {
+
+    private static final String FILE_NOT_FOUND = "File: \"%s\" not found\n";
+    private static final String INVALID_READ_ACCESS_TO_THE_FILE_S = "Invalid read access to the file: \"%s\"";
 
     private Coder() {
     }
@@ -59,12 +66,12 @@ public class Coder {
 
             } catch (FileNotFoundException e) {
 
-                String message = "File: \"" + pathTo + "\" not found exception";
+                String message = String.format(FILE_NOT_FOUND, pathTo);
                 throw new PathProcessingException(message, e);
 
             } catch (SecurityException e) {
 
-                String message = "Invalid read access to the file: \"" + pathTo + "\"";
+                String message = String.format(INVALID_READ_ACCESS_TO_THE_FILE_S, pathTo);
                 throw new PathProcessingException(message, e);
 
             } catch (IOException e) {
@@ -75,12 +82,12 @@ public class Coder {
 
         } catch (FileNotFoundException e) {
 
-            String message = "File: \"" + pathFrom + "\" not found";
+            String message = String.format(FILE_NOT_FOUND, pathFrom);
             throw new PathProcessingException(message, e);
 
         } catch (SecurityException e) {
 
-            String message = "Invalid read access to the file: \"" + pathFrom + "\"";
+            String message = String.format(INVALID_READ_ACCESS_TO_THE_FILE_S, pathFrom);
             throw new PathProcessingException(message, e);
 
         } catch (IOException e) {

@@ -1,4 +1,4 @@
-package ru.javarush.sergeyivanov.cryptoanalyser;
+package ru.javarush.sergeyivanov.cryptoanalyser.TextProcessing;
 
 public class Decoder {
 
@@ -6,15 +6,15 @@ public class Decoder {
     }
 
     public static void decryptionWithKey(String pathFrom, String pathTo, int key) {
-        key *= -1;
-        Coder.encryption(pathFrom, pathTo, key);
+
+        Coder.encryption(pathFrom, pathTo, -key);
     }
 
     public static void manualDecryptionBruteForce(String pathFrom, String pathTo) {
 
         for (int key = 1; key < TextProcessing.choiceOfAlphabet(TextProcessing.language).length; key++) {
 
-            String pathKey = getNewFileNameBF(key, pathTo);
+            String pathKey = getNewFileName(key, pathTo);
             Coder.encryption(pathFrom, pathKey, key);
         }
     }
@@ -42,7 +42,7 @@ public class Decoder {
             int foundKey = indexOfMostFrequentLetterOfText
                     - TextProcessing.getIndex(chars[ind], TextProcessing.language);
 
-            String pathKey = getNewFileNameSA(foundKey, pathTo);
+            String pathKey = getNewFileName(foundKey, pathTo);
 
             decryptionWithKey(pathFrom, pathKey, foundKey);
         }
@@ -67,12 +67,7 @@ public class Decoder {
         }
     }
 
-    public static String getNewFileNameBF(int key, String pathTo) {
-        return pathTo + System.getProperty("file.separator") + "BruteForce_key" + key + ".txt";
+    public static String getNewFileName(int key, String pathTo) {
+        return pathTo + System.getProperty("file.separator") + "Decode_key_" + key + ".txt";
     }
-
-    public static String getNewFileNameSA(int key, String pathTo) {
-        return pathTo + System.getProperty("file.separator") + "StatisticAnalise_key" + key + ".txt";
-    }
-
 }
