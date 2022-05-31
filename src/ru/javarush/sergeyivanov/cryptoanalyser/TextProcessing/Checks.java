@@ -19,13 +19,29 @@ public class Checks {
 
     public static void whetherPathIsFile(String path) {
 
-        Path filePath = null;
+        Path filePath;
         try {
             filePath = Path.of(path);
         } catch (InvalidPathException ex) {
 
             String message = String.format(PATH_IS_INVALID, path);
             throw new PathProcessingException(message, ex);
+        }
+
+        if (!Files.isReadable(filePath)) {
+            String message = "File: "+ filePath + " is not readable";
+            throw new PathProcessingException(message);
+        }
+
+        if (Files.isDirectory(filePath)) {
+
+            String message = "Path: "+ filePath + " is directory";
+            throw new PathProcessingException(message);
+        }
+
+        if (!path.endsWith(".txt")) {
+            String message = "Path: "+ filePath + " is not ended .txt";
+            throw new PathProcessingException(message);
         }
     }
 

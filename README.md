@@ -39,3 +39,7 @@ Project launch:
 Limitations:
 Amount keys can be from Integer.MIN_VALUE to Integer.MAX_VALUE.
 
+Main logic formed at the: 
+- ru.javarush.sergeyivanov.cryptoanalyser.TextProcessing.Coder;
+- ru.javarush.sergeyivanov.cryptoanalyser.TextProcessing.Decoder.
+
