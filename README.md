@@ -44,5 +44,5 @@ Main logic formed at the:
 
 
 #####An example of using application:
-![](img.png)
+![](2022-05-31_21-29-38.png)
 
