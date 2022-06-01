@@ -1,3 +1,0 @@
-The program had six modes of using. 
-- "Encryption". Text from first indicated file is encoding
-to second file. 
