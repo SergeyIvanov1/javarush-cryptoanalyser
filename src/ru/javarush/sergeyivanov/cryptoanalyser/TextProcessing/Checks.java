@@ -17,7 +17,7 @@ public class Checks {
     private Checks() {
     }
 
-    public static void whetherPathIsFile(String path) {
+    public static void isFile(String path) {
 
         Path filePath;
         try {
@@ -83,9 +83,11 @@ public class Checks {
 
     public static boolean isCorrespondFrequentWords(String word) {
 
-        for (int i = 0; i < TextProcessing.getArrayFrequentWords(TextProcessing.language).length; i++) {
+        String[] array = TextProcessing.getArrayFrequentWords(TextProcessing.language);
+
+        for (int i = 0; i < array.length; i++) {
             String value;
-            String fromStrings = TextProcessing.getArrayFrequentWords(TextProcessing.language)[i];
+            String fromStrings = array[i];
 
             if (word.length() > NUMBER_OF_LETTERS_FROM_BEGINNING
                     && fromStrings.length() > NUMBER_OF_LETTERS_FROM_BEGINNING) {
@@ -98,7 +100,6 @@ public class Checks {
                 }
 
             } else if (word.equalsIgnoreCase(fromStrings)) {
-
                 return true;
             }
         }
@@ -110,13 +111,13 @@ public class Checks {
         try (FileInputStream fileInputStream = new FileInputStream(pathTo);
              BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream))) {
 
-            int symbol;
-            int count = 0;
-            String wordFromFile;
-            String secondWordFromFile = null;
             StringBuilder stringBuilder = new StringBuilder();
+            String secondWordFromFile = null;
+            int count = 0;
+            int symbol;
 
             while ((symbol = bufferedReader.read()) != -1) {
+                String wordFromFile;
 
                 if (Character.isLetter(symbol) || Character.isWhitespace(symbol)) {
 
@@ -130,8 +131,8 @@ public class Checks {
 
                             count++;
 
-                            // если count > 1, значит два разных слова из Alphabets.STRINGS
-                            // совпали с содержимым pathFrom
+                            // if "count" > 1, means two different words from Alphabets.STRINGS
+                            // match with content "pathFrom"
                             if (count > 1) {
 
                                 return true;

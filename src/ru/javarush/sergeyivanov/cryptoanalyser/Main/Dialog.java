@@ -14,15 +14,19 @@ public class Dialog {
 
     private static final String PATH_SPECIFIED_WRONG = "\nPath specified wrong.";
     private static final String ERROR_READING_WRITING_FILE = "\nError reading/writing file";
-    private static final String STRING_IS_EMPTY = "String is empty";
-    private static String pathFrom;
-    private static String pathTo;
-    private static String key;
-    private static final String WRONG_KEY = "\nWrong key: " + key;
+    private static final String STRING_IS_EMPTY_ERROR_MESSAGE = "String is empty";
+    private static final String WRONG_KEY = "\nWrong key: ";
     private static final String SELECTED_FUNCTION_ENCODE = "encode";
     private static final String SELECTED_FUNCTION_DECODE = "decode";
     private static final String QUERY_OF_CONTINUATION = "Completion function. "
             + "select the menu number to continue the program or enter \"exit\" for exit";
+    private static final int EXIT_STATUS_1 = 1;
+    private static final int EXIT_STATUS_2 = 2;
+    private static final int EXIT_STATUS_3 = 3;
+    private static final int EXIT_STATUS_4 = 4;
+    private static String pathFrom;
+    private static String pathTo;
+    private static String key;
 
     private Dialog() {
     }
@@ -38,11 +42,11 @@ public class Dialog {
         while (true) {
             String answer = console.nextLine();
 
-            if (answer.equalsIgnoreCase("en")) {
-                TextProcessing.language = "Latin";
+            if ("en".equalsIgnoreCase(answer)) {
+                TextProcessing.language = TextProcessing.ENGLISH_LANGUAGE;
                 break;
-            } else if (answer.equalsIgnoreCase("ru")) {
-                TextProcessing.language = "Cyrillic";
+            } else if ("ru".equalsIgnoreCase(answer)) {
+                TextProcessing.language = TextProcessing.RUSSIAN_LANGUAGE;
                 break;
             } else {
                 System.out.println("Enter \"en\" or \"ru\"");
@@ -58,65 +62,53 @@ public class Dialog {
                 + "6 - Decode text, using \"Statistic analise\" method, using auto selection\n");
 
         String choice;
-        while (!(choice = console.nextLine()).equalsIgnoreCase("exit")) {
+        while (!("exit").equalsIgnoreCase(choice = console.nextLine())) {
             switch (choice) {
                 case "1":
+
                     try {
-
-                        Dialog.requestPath(console, SELECTED_FUNCTION_ENCODE);
+                        requestPath(console, SELECTED_FUNCTION_ENCODE);
                     } catch (PathProcessingException ex) {
-
-                        messageToUserAboutError(ex, PATH_SPECIFIED_WRONG, 1);
+                        messageToUserAboutError(ex, PATH_SPECIFIED_WRONG, EXIT_STATUS_1);
                     }
 
                     try {
-
-                        Dialog.requestKey(console);
+                        requestKey(console);
                     } catch (KeyInvalidException e) {
-
-                        messageToUserAboutError(e, WRONG_KEY, 2);
+                        messageToUserAboutError(e, WRONG_KEY, EXIT_STATUS_2);
                     }
 
                     try {
                         Coder.encryption(pathFrom, pathTo, Integer.parseInt(key));
                     } catch (PathProcessingException e) {
-
-                        messageToUserAboutError(e, PATH_SPECIFIED_WRONG, 3);
-
+                        messageToUserAboutError(e, PATH_SPECIFIED_WRONG, EXIT_STATUS_3);
                     } catch (ReadWrightFileException ex) {
-
-                        messageToUserAboutError(ex, ERROR_READING_WRITING_FILE, 4);
+                        messageToUserAboutError(ex, ERROR_READING_WRITING_FILE, EXIT_STATUS_4);
                     }
 
                     System.out.println(QUERY_OF_CONTINUATION);
                     break;
 
                 case "2":
+
                     try {
-
-                        Dialog.requestPath(console, SELECTED_FUNCTION_DECODE);
+                        requestPath(console, SELECTED_FUNCTION_DECODE);
                     } catch (PathProcessingException ex) {
-
-                        messageToUserAboutError(ex, PATH_SPECIFIED_WRONG, 1);
+                        messageToUserAboutError(ex, PATH_SPECIFIED_WRONG, EXIT_STATUS_1);
                     }
 
                     try {
-
-                        Dialog.requestKey(console);
+                        requestKey(console);
                     } catch (KeyInvalidException e) {
-
-                        messageToUserAboutError(e, WRONG_KEY, 2);
+                        messageToUserAboutError(e, WRONG_KEY, EXIT_STATUS_2);
                     }
 
                     try {
                         Decoder.decryptionWithKey(pathFrom, pathTo, Integer.parseInt(key));
                     } catch (PathProcessingException e) {
-
-                        messageToUserAboutError(e, PATH_SPECIFIED_WRONG, 3);
-
+                        messageToUserAboutError(e, PATH_SPECIFIED_WRONG, EXIT_STATUS_3);
                     } catch (ReadWrightFileException ex) {
-
-                        messageToUserAboutError(ex, ERROR_READING_WRITING_FILE, 4);
+                        messageToUserAboutError(ex, ERROR_READING_WRITING_FILE, EXIT_STATUS_4);
                     }
 
                     System.out.println(QUERY_OF_CONTINUATION);
@@ -125,23 +117,18 @@ public class Dialog {
                 case "3":
 
                     try {
-
-                        Dialog.requestFileAddress(console);
-                        Dialog.requestDirectoryAddress(console);
+                        requestFileAddress(console);
+                        requestDirectoryAddress(console);
                     } catch (PathProcessingException ex) {
-
-                        messageToUserAboutError(ex, PATH_SPECIFIED_WRONG, 1);
+                        messageToUserAboutError(ex, PATH_SPECIFIED_WRONG, EXIT_STATUS_1);
                     }
 
                     try {
                         Decoder.manualDecryptionBruteForce(pathFrom, pathTo);
                     } catch (PathProcessingException e) {
-
-                        messageToUserAboutError(e, PATH_SPECIFIED_WRONG, 3);
-
+                        messageToUserAboutError(e, PATH_SPECIFIED_WRONG, EXIT_STATUS_3);
                     } catch (ReadWrightFileException ex) {
-
-                        messageToUserAboutError(ex, ERROR_READING_WRITING_FILE, 4);
+                        messageToUserAboutError(ex, ERROR_READING_WRITING_FILE, EXIT_STATUS_4);
                     }
 
                     System.out.println(QUERY_OF_CONTINUATION);
@@ -150,23 +137,17 @@ public class Dialog {
                 case "4":
 
                     try {
-
-                        Dialog.requestPath(console, SELECTED_FUNCTION_DECODE);
+                        requestPath(console, SELECTED_FUNCTION_DECODE);
                     } catch (PathProcessingException ex) {
-
-                        messageToUserAboutError(ex, PATH_SPECIFIED_WRONG, 1);
+                        messageToUserAboutError(ex, PATH_SPECIFIED_WRONG, EXIT_STATUS_1);
                     }
 
                     try {
-
                         Decoder.autoDecryptionBruteForce(pathFrom, pathTo);
                     } catch (PathProcessingException e) {
-
-                        messageToUserAboutError(e, PATH_SPECIFIED_WRONG, 3);
-
+                        messageToUserAboutError(e, PATH_SPECIFIED_WRONG, EXIT_STATUS_3);
                     } catch (ReadWrightFileException ex) {
-
-                        messageToUserAboutError(ex, ERROR_READING_WRITING_FILE, 4);
+                        messageToUserAboutError(ex, ERROR_READING_WRITING_FILE, EXIT_STATUS_4);
                     }
 
                     System.out.println(QUERY_OF_CONTINUATION);
@@ -175,23 +156,18 @@ public class Dialog {
                 case "5":
 
                     try {
-
-                        Dialog.requestFileAddress(console);
-                        Dialog.requestDirectoryAddress(console);
+                        requestFileAddress(console);
+                        requestDirectoryAddress(console);
                     } catch (PathProcessingException ex) {
-
-                        messageToUserAboutError(ex, PATH_SPECIFIED_WRONG, 1);
+                        messageToUserAboutError(ex, PATH_SPECIFIED_WRONG, EXIT_STATUS_1);
                     }
 
                     try {
                         Decoder.manualDecryptionWithStatistic(pathFrom, pathTo);
                     } catch (PathProcessingException e) {
-
-                        messageToUserAboutError(e, PATH_SPECIFIED_WRONG, 3);
-
+                        messageToUserAboutError(e, PATH_SPECIFIED_WRONG, EXIT_STATUS_3);
                     } catch (ReadWrightFileException ex) {
-
-                        messageToUserAboutError(ex, ERROR_READING_WRITING_FILE, 4);
+                        messageToUserAboutError(ex, ERROR_READING_WRITING_FILE, EXIT_STATUS_4);
                     }
 
                     System.out.println(QUERY_OF_CONTINUATION);
@@ -200,22 +176,17 @@ public class Dialog {
                 case "6":
 
                     try {
-
-                        Dialog.requestPath(console, SELECTED_FUNCTION_DECODE);
+                        requestPath(console, SELECTED_FUNCTION_DECODE);
                     } catch (PathProcessingException ex) {
-
-                        messageToUserAboutError(ex, PATH_SPECIFIED_WRONG, 1);
+                        messageToUserAboutError(ex, PATH_SPECIFIED_WRONG, EXIT_STATUS_1);
                     }
 
                     try {
                         Decoder.autoDecryptionWithStatistic(pathFrom, pathTo);
                     } catch (PathProcessingException e) {
-
-                        messageToUserAboutError(e, PATH_SPECIFIED_WRONG, 3);
-
+                        messageToUserAboutError(e, PATH_SPECIFIED_WRONG, EXIT_STATUS_3);
                     } catch (ReadWrightFileException ex) {
-
-                        messageToUserAboutError(ex, ERROR_READING_WRITING_FILE, 4);
+                        messageToUserAboutError(ex, ERROR_READING_WRITING_FILE, EXIT_STATUS_4);
                     }
 
                     System.out.println(QUERY_OF_CONTINUATION);
@@ -237,42 +208,47 @@ public class Dialog {
         System.out.println("Enter file address (\".txt\" format), where is text for " + selectFunction);
         pathFrom = console.nextLine();
         if (pathFrom.isEmpty()) {
-            throw new PathProcessingException(STRING_IS_EMPTY);
+            throw new PathProcessingException(STRING_IS_EMPTY_ERROR_MESSAGE);
         }
-        Checks.whetherPathIsFile(pathFrom);
+        Checks.isFile(pathFrom);
 
         System.out.println("Enter file address (\".txt\" format), "
                 + "where will save result of " + selectFunction);
 
         pathTo = console.nextLine();
         if (pathTo.isEmpty()) {
-            throw new PathProcessingException(STRING_IS_EMPTY);
+            throw new PathProcessingException(STRING_IS_EMPTY_ERROR_MESSAGE);
         }
 
-        Checks.whetherPathIsFile(pathTo);
+        Checks.isFile(pathTo);
     }
 
     private static void requestFileAddress(Scanner console) {
+
         System.out.println("Enter file address (\".txt\" format), where is text for decode");
         pathFrom = console.nextLine();
+
         if (pathFrom.isEmpty()) {
-            throw new PathProcessingException(STRING_IS_EMPTY);
+            throw new PathProcessingException(STRING_IS_EMPTY_ERROR_MESSAGE);
         }
 
-        Checks.whetherPathIsFile(pathFrom);
+        Checks.isFile(pathFrom);
     }
 
     private static void requestDirectoryAddress(Scanner console) {
+
         System.out.println("Enter folder address, where will save result of decode");
         pathTo = console.nextLine();
+
         if (pathTo.isEmpty()) {
-            throw new PathProcessingException(STRING_IS_EMPTY);
+            throw new PathProcessingException(STRING_IS_EMPTY_ERROR_MESSAGE);
         }
 
         Checks.whetherPathIsDirectory(pathTo);
     }
 
     private static void requestKey(Scanner console) {
+
         System.out.println("Enter the key");
         key = console.nextLine();
         Checks.notKey(key, TextProcessing.language);
