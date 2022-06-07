@@ -224,8 +224,10 @@ public class Dialog {
     }
 
     private static void requestFileAddress(Scanner console) {
+
         System.out.println("Enter file address (\".txt\" format), where is text for decode");
         pathFrom = console.nextLine();
+
         if (pathFrom.isEmpty()) {
             throw new PathProcessingException(STRING_IS_EMPTY_ERROR_MESSAGE);
         }
@@ -234,8 +236,10 @@ public class Dialog {
     }
 
     private static void requestDirectoryAddress(Scanner console) {
+
         System.out.println("Enter folder address, where will save result of decode");
         pathTo = console.nextLine();
+
         if (pathTo.isEmpty()) {
             throw new PathProcessingException(STRING_IS_EMPTY_ERROR_MESSAGE);
         }
@@ -244,6 +248,7 @@ public class Dialog {
     }
 
     private static void requestKey(Scanner console) {
+
         System.out.println("Enter the key");
         key = console.nextLine();
         Checks.notKey(key, TextProcessing.language);
