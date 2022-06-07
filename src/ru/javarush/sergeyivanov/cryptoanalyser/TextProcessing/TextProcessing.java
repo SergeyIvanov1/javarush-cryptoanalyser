@@ -11,11 +11,9 @@ import java.util.Set;
 
 public class TextProcessing {
 
-    public static String language = "Cyrillic";
+    private static final char[] SYMBOLS = {'\n', ' ', '!', '"', '\'', ',', '-', '.', ':', '?'};
 
-    public static final char[] SYMBOLS = {'\n', ' ', '!', '"', '\'', ',', '-', '.', ':', '?'};
-
-    private static final String[] RUSTRINGS = {"и", "не", "на", "быть", "он",
+    private static final String[] FREQUENTLY_RUSSIAN_STRINGS = {"и", "не", "на", "быть", "он",
             "что", "это", "она", "этот", "но", "они", "мы", "как", "из", "который", "то", "за", "свой", "что",
             "весь", "год", "от", "так", "для", "ты", "же", "все", "тот", "мочь", "вы", "человек", "такой", "его",
             "сказать", "только", "или", "ещё", "бы", "себя", "один", "как", "уже", "до", "время", "если", "сам",
@@ -118,7 +116,7 @@ public class TextProcessing {
             "проведение", "карман", "любимый", "родной", "западный", "обязательно", "слава", "кухня", "определение",
             "пользоваться", "быстрый"};
 
-    private static final String[] ENSTRINGS = {"the", "of", "and",
+    private static final String[] FREQUENTLY_ENGLISH_STRINGS = {"the", "of", "and",
             "in", "to", "have", "it", "for", "that", "you", "with", "not", "this",
             "but", "from", "they", "his", "she", "which", "as", "we", "say", "will", "would", "can", "if",
             "their", "go", "what", "there", "all", "get", "her", "make", "who", "out", "up", "see", "know", "time",
@@ -223,20 +221,26 @@ public class TextProcessing {
             'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
     // According to statistics, the any letters are meeting most frequently.
-    private static final char[] mostFrequentLettersRu = new char[]{'о', 'е', 'а', 'и', 'т', 'н'};
-    private static final char[] mostFrequentLettersEn = new char[]{'e', 't', 'a', 'o', 'i', 'n'};
+    private static final char[] MOST_FREQUENT_RUSSIAN_LETTERS = new char[]{'о', 'е', 'а', 'и', 'т', 'н'};
+    private static final char[] MOST_FREQUENT_ENGLISH_LETTERS = new char[]{'e', 't', 'a', 'o', 'i', 'n'};
+
+    public static final String RUSSIAN_LANGUAGE = "Cyrillic";
+    public static final String ENGLISH_LANGUAGE = "Latin";
+
+    public static final String ALPHABET_OF_SYMBOLS = "Symbols";
+    public static String language = RUSSIAN_LANGUAGE;
 
     private TextProcessing() {
     }
 
     public static int getIndex(char letter, String language) {
-        if (language.equals("Cyrillic"))
+        if (RUSSIAN_LANGUAGE.equals(language))
             for (int i = 0; i < CYRILLIC.length; i++) {
                 if (letter == CYRILLIC[i]) {
                     return i;
                 }
             }
-        else if (language.equals("Latin")) {
+        else if (ENGLISH_LANGUAGE.equals(language)) {
             int index = Arrays.binarySearch(LATIN, letter);
             if (index >= 0) {
                 return index;
@@ -249,19 +253,15 @@ public class TextProcessing {
 
     public static boolean isSymbol(char symbol) {
         int index = Arrays.binarySearch(SYMBOLS, symbol);
-        if (index >= 0) {
-            return true;
-        } else {
-            return false;
-        }
+            return index >= 0;
     }
 
-    public static char[] choiceOfAlphabet(String name) {
-        if (name.equals("Cyrillic")) {
+    public static char[] choiceOfAlphabet(String language) {
+        if (RUSSIAN_LANGUAGE.equals(language)) {
             return CYRILLIC;
-        } else if (name.equals("Latin")) {
+        } else if (ENGLISH_LANGUAGE.equals(language)) {
             return LATIN;
-        } else if (name.equals("Symbols")) {
+        } else if (ALPHABET_OF_SYMBOLS.equals(language)) {
             return SYMBOLS;
         }
         return new char[0];
@@ -269,22 +269,22 @@ public class TextProcessing {
 
     public static char[] getArrayGreatestFrequentLettersOfAlphabets(String language) {
 
-        if (language.equals("Cyrillic")) {
-            return mostFrequentLettersRu;
-        } else if (language.equals("Latin")) {
-            return mostFrequentLettersEn;
+        if (RUSSIAN_LANGUAGE.equals(language)) {
+            return MOST_FREQUENT_RUSSIAN_LETTERS;
+        } else if (ENGLISH_LANGUAGE.equals(language)) {
+            return MOST_FREQUENT_ENGLISH_LETTERS;
         }
         return new char[0];
     }
 
     public static String[] getArrayFrequentWords(String language) {
 
-        if (language.equals("Cyrillic")) {
-            return RUSTRINGS;
-        } else if (language.equals("Latin")) {
-            return ENSTRINGS;
+        if (RUSSIAN_LANGUAGE.equals(language)) {
+            return FREQUENTLY_RUSSIAN_STRINGS;
+        } else if (ENGLISH_LANGUAGE.equals(language)) {
+            return FREQUENTLY_ENGLISH_STRINGS;
         }
-        return new String[0];
+        return null;
     }
 
     public static char getMostFrequentLetterOfText(String pathFrom) {

@@ -56,8 +56,8 @@ public class Decoder {
 
         for (int ind = 0; ind < chars.length; ind++) {
 
-            int foundKey = indexOfMostFrequentLetterOfText
-                    - TextProcessing.getIndex(chars[ind], TextProcessing.language);
+            int indexOfMostFrequentLetterOfAlphabet = TextProcessing.getIndex(chars[ind], TextProcessing.language);
+            int foundKey = indexOfMostFrequentLetterOfText - indexOfMostFrequentLetterOfAlphabet;
 
             decryptionWithKey(pathFrom, pathTo, foundKey);
 

@@ -36,13 +36,14 @@ public class Coder {
                         int index = TextProcessing.getIndex((char) unencryptedChar, TextProcessing.language);
                         if (index >= 0) {
 
-                            int secretCharInd = (index + key) % TextProcessing.choiceOfAlphabet(TextProcessing.language).length;
+                            char[] arrayAlphabet = TextProcessing.choiceOfAlphabet(TextProcessing.language);
+
+                            int secretCharInd = (index + key) % arrayAlphabet.length;
                             if (secretCharInd < 0) {
-                                secretCharInd = TextProcessing.choiceOfAlphabet(TextProcessing.language).length
-                                        - Math.abs(secretCharInd);
+                                secretCharInd = arrayAlphabet.length - Math.abs(secretCharInd);
                             }
 
-                            wantedChar = TextProcessing.choiceOfAlphabet(TextProcessing.language)[secretCharInd];
+                            wantedChar = arrayAlphabet[secretCharInd];
 
                             if (flagUpperCase) {
                                 bufferedWriter.append(Character.toUpperCase(wantedChar));
@@ -53,10 +54,12 @@ public class Coder {
 
                     } else {
 
-                        for (int j = 0; j < TextProcessing.SYMBOLS.length; j++) {
-                            if (unencryptedChar == TextProcessing.SYMBOLS[j]) {
+                        char[] array = TextProcessing.choiceOfAlphabet(TextProcessing.ALPHABET_OF_SYMBOLS);
 
-                                wantedChar = TextProcessing.SYMBOLS[j];
+                        for (int j = 0; j < array.length; j++) {
+                            if (unencryptedChar == array[j]) {
+
+                                wantedChar = array[j];
                                 bufferedWriter.append(wantedChar);
                             }
                         }
